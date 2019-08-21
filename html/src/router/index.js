@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import login from '@/components/login'
 import Elogin from '@/components/Elogin'
-import Emain from '@/components/Emain'
-import main from '@/components/main'
+import Emain from '@/components/Employee_main/Emain'
+import Hmain from '@/components/Hr_main/Hmain'
 
 Vue.use(Router)
 
@@ -21,9 +21,9 @@ export default new Router({
       component: Emain
     },
     {
-      path: '/main',
-      name: 'main',
-      component: main
+      path: '/Hmain',
+      name: 'Hmain',
+      component: Hmain
     },
     {
       path: '/e',
