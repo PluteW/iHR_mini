@@ -46,7 +46,9 @@ import {
   Step,
   Collapse,
   CollapseItem,
-  Notification
+  Notification,
+  TabPane,
+  Tabs
 } from 'element-ui'
 const components = [
   Row,
@@ -89,7 +91,9 @@ const components = [
   Steps,
   Step,
   Collapse,
-  CollapseItem
+  CollapseItem,
+  TabPane,
+  Tabs
 ]
 components.forEach(element => {
   Vue.component(element.name, element)
