@@ -3,12 +3,9 @@
         <div class="header_continer">
             <div class="header">
                 <el-tabs v-model="activeName" type="card" id = "label_continer" stretch>
-                <el-tab-pane name="publish" label="发布">
-                </el-tab-pane>
-                <el-tab-pane name="polling" label="查询">
-                </el-tab-pane>
-                <el-tab-pane name="detail" label="详情">
-                </el-tab-pane>
+                    <el-tab-pane name="publish" label="发布" > </el-tab-pane>
+                    <el-tab-pane name="polling" label="查询"> </el-tab-pane>
+                    <el-tab-pane name="detail" label="详情"> </el-tab-pane>
                 </el-tabs>
             </div>
         </div>
@@ -16,7 +13,7 @@
             <publish></publish>
         </div>
         <div v-if="activeName === 'polling'">
-            <polling></polling>
+            <polling v-bind:cotent="activeName"></polling>
         </div>
         <div v-if="activeName === 'detail'">
             <detail></detail>
@@ -37,7 +34,7 @@ export default Vue.extend({
   },
   data () {
     return {
-      activeName: 'publish',
+      activeName: 'polling',
       blocks: [
         { name: 'publish', label: '发布' },
         { name: 'polling', label: '查询' },
@@ -49,14 +46,14 @@ export default Vue.extend({
 </script>
 <style>
 .header_continer{
-    border-bottom: rgb(71, 106, 182) 2px double;
+    border-bottom: rgb(39, 146, 196) 2px double;
     width: 90%;
     padding-top: 10px;
     margin: auto;
 }
 .header{
     width: 50%;
-    margin-left: 6%;
+    margin-left: 8%;
     height: 50px;
 }
 </style>

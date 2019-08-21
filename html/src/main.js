@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueBus from 'vue-bus'
 import {
   Table,
   Tooltip,
@@ -106,6 +107,7 @@ Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.baseURL = process.env.API_URL
 Vue.prototype.$notify = Notification
 
+Vue.use(VueBus)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
