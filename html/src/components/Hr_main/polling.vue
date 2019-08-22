@@ -80,10 +80,10 @@
                 </el-form>
         </div>
         <div align="center">
-            <el-table ref="multipleTable" style="width:90%" align="center" border :data="tableData" tooltip-effect="dark"  @selection-change="handleTableSelection">
+            <el-table ref="multipleTable" style="width:90%" align="center" border :data="tableData" tooltip-effect="dark"  @row-click="handleView" @selection-change="handleTableSelection">
                 <el-table-column type="selection" width="55" align="center">  </el-table-column>
                 <el-table-column label="编号" width="120" align="center">
-                    <template slot-scope="scope" align="center">{{ scope.row.date }}</template>
+                    <template slot-scope="scope" align="center">{{ scope.row.id }}</template>
                 </el-table-column>
                 <el-table-column label="姓名" width="80" align="center">
                     <template slot-scope="scope" align="center">{{ scope.row.name }}</template>
@@ -110,16 +110,15 @@
                     <template slot-scope="scope" align="center">{{ scope.row.graduatedYear }}</template>
                 </el-table-column>
                  <el-table-column prop="handle" label="操作" fixed="right" :show-overflow-tooltip="true" align="center" width="52">
-                    <el-button type="text" aria-label="查看" @click="handleView()" style="min-width:auto" size="mini">查看</el-button>
+                    <el-button type="text" aria-label="查看" style="min-width:auto" size="mini">查看</el-button>
                 </el-table-column>
             </el-table>
             <el-row>
-                <el-pagination @size-change="setPageSize" @current-change="setPageIndex" current-page="1" :page-sizes="[2,10, 20, 50]"
-                    page-size="2" layout="total, sizes, prev, pager, next, jumper" total="3"
+                <el-pagination  @current-change="setPageIndex" :current-page="pageIndex" :page-size="10"
+                    layout="prev, pager, next" :total="resultTotal" :pager-count="5"
                     class="float-right"></el-pagination>
             </el-row>
         </div>
-         {{message}}<el-button @click="send"></el-button>
     </div>
 </template>
 
@@ -128,7 +127,6 @@ import { Loading, Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import Qs from 'qs'
-var tem = 1
 const eduBackGroundOptions = ['全选', '本科在读', '本科毕业', '研究生', '博士', '留学生']
 // let loadingInstance = Loading.service({
 //   text: '请稍等...',
@@ -150,6 +148,8 @@ export default {
         eduBackGround: [], // 学历选择项
         age: '' // 年龄
       },
+      pageIndex: 0, // 初始化页数
+      resultTotal: 0, // 数据总数
       flagChecked: false,
       chileDhecked: false,
       region: ['山东', '北京', '上海', '广州'], // 应聘者来源
@@ -158,7 +158,7 @@ export default {
       status: ['待审核', '已审核', '流程中', '已锁定'], // 可供选择简历状态
       age: ['19', '20', '21', '22', '23'], // 可供选择的年龄范围
       tableData: [{ // 测试用数据
-        date: '123456',
+        id: '123456',
         name: '王小虎',
         sex: '男',
         age: '24',
@@ -168,7 +168,7 @@ export default {
         eduBack: '本科',
         graduatedYear: '2020'
       }, {
-        date: '789098',
+        id: '789098',
         name: '王小虎',
         sex: '男',
         age: '24',
@@ -178,7 +178,7 @@ export default {
         eduBack: '本科',
         graduatedYear: '2020'
       }, {
-        date: '373704',
+        id: '373704',
         name: '王小虎',
         sex: '男',
         age: '24',
@@ -188,7 +188,67 @@ export default {
         eduBack: '本科',
         graduatedYear: '2020'
       }, {
-        date: '037595',
+        id: '037595',
+        name: '王小虎',
+        sex: '男',
+        age: '24',
+        job: 'IT开发工程师',
+        school: '湖南大学',
+        major: '化学',
+        eduBack: '本科',
+        graduatedYear: '2020'
+      }, {
+        id: '037595',
+        name: '王小虎',
+        sex: '男',
+        age: '24',
+        job: 'IT开发工程师',
+        school: '湖南大学',
+        major: '化学',
+        eduBack: '本科',
+        graduatedYear: '2020'
+      }, {
+        id: '037595',
+        name: '王小虎',
+        sex: '男',
+        age: '24',
+        job: 'IT开发工程师',
+        school: '湖南大学',
+        major: '化学',
+        eduBack: '本科',
+        graduatedYear: '2020'
+      }, {
+        id: '037595',
+        name: '王小虎',
+        sex: '男',
+        age: '24',
+        job: 'IT开发工程师',
+        school: '湖南大学',
+        major: '化学',
+        eduBack: '本科',
+        graduatedYear: '2020'
+      }, {
+        id: '037595',
+        name: '王小虎',
+        sex: '男',
+        age: '24',
+        job: 'IT开发工程师',
+        school: '湖南大学',
+        major: '化学',
+        eduBack: '本科',
+        graduatedYear: '2020'
+      }, {
+        id: '037595',
+        name: '王小虎',
+        sex: '男',
+        age: '24',
+        job: 'IT开发工程师',
+        school: '湖南大学',
+        major: '化学',
+        eduBack: '本科',
+        graduatedYear: '2020'
+      }, {
+        id: '037595',
         name: '王小虎',
         sex: '男',
         age: '24',
@@ -201,11 +261,6 @@ export default {
     }
   },
   methods: {
-    send () {
-      tem++
-      let newTodoText = tem
-      this.$bus.emit('val', newTodoText)
-    },
     handleTableSelection (val) {
       this.multipleSelection = val
       console.log(this.multipleSelection)
@@ -218,14 +273,17 @@ export default {
       }
       this.flagChecked = !this.flagChecked
     },
-    handleView () {
+    handleView (row) {
+      console.log(row.id)
+      this.$bus.emit('employeeId', row.id)
+      this.$emit('func', 'detail')
     },
-    setPageSize () {
+    setPageIndex (val) {
+      let _self = this
+      _self.pageIndex = val
+      _self.handleSubmit()
     },
-    setPageIndex () {
-    },
-    onSubmit () {
-      console.log(this.form)
+    handleSubmit () {
       let _self = this
       let loadingInstance = Loading.service({
         text: '请稍等...',
@@ -236,7 +294,8 @@ export default {
           method: 'post',
           url: 'ccs/', // 请求数据地址
           data: {
-            form: _self.form // 保存了数据的对象
+            form: _self.form, // 保存了数据的对象
+            pageIndex: _self.pageIndex
           },
           transformRequest: [function (data) {
             var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -248,21 +307,27 @@ export default {
       ).then(
         function (res) { // 如果返回数据，则放到表格中
           if (res.data) {
-            localStorage.setItem('userdata', res.data)
+            _self.tableData = res.data.tableData
+            _self.resultTotal = res.data.resultTotal
             loadingInstance.close()
           }
         }, function (response) { // 如果返回错误，则提错
           if (response) {
             loadingInstance.close()
-            _self.errorMsg = 'Please input valid username and password'
             Message({
-              type: 'warning',
+              type: 'error',
               message: response
             })
           }
         }
       )
       loadingInstance.close()
+    },
+    onSubmit () {
+      console.log(this.form)
+      let _self = this
+      _self.pageIndex = 1
+      this.handleSubmit()
     },
     reset () {
       let loadingInstance = Loading.service({

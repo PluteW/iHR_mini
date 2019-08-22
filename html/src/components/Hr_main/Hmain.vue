@@ -2,10 +2,10 @@
     <div>
         <div class="header_continer">
             <div class="header">
-                <el-tabs v-model="activeName" type="card" id = "label_continer" stretch>
-                    <el-tab-pane name="publish" label="发布" > </el-tab-pane>
-                    <el-tab-pane name="polling" label="查询"> </el-tab-pane>
-                    <el-tab-pane name="detail" label="详情"> </el-tab-pane>
+                <el-tabs v-model="activeName"  type="card" id = "label_continer" stretch>
+                    <el-tab-pane name="publish" id="publish" label="发布" > </el-tab-pane>
+                    <el-tab-pane name="polling"  id="polling" label="查询"> </el-tab-pane>
+                    <el-tab-pane name="detail" id="detail" label="详情"> </el-tab-pane>
                 </el-tabs>
             </div>
         </div>
@@ -13,7 +13,7 @@
             <publish></publish>
         </div>
         <div v-if="activeName === 'polling'">
-            <polling v-bind:cotent="activeName"></polling>
+            <polling v-bind:cotent="activeName" v-on:func = 'changeView'></polling>
         </div>
         <div v-if="activeName === 'detail'">
             <detail></detail>
@@ -40,6 +40,11 @@ export default Vue.extend({
         { name: 'polling', label: '查询' },
         { name: 'detail', label: '详情' }
       ]
+    }
+  },
+  methods: {
+    changeView (choose) {
+      this.activeName = 'detail'
     }
   }
 })

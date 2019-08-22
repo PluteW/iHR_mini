@@ -99,7 +99,7 @@ const components = [
 components.forEach(element => {
   Vue.component(element.name, element)
 })
-
+// Vue.component(pdf, pdf)
 Vue.prototype.$message = Message
 Vue.prototype.$msgbox = MessageBox
 Vue.prototype.$alert = MessageBox.alert
