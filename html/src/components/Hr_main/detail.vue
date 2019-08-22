@@ -1,21 +1,18 @@
 <template>
     <div>
         <div v-if="gotResumed">
-                <el-button type="primary" key="1"  @click="download"
-                style="margin: 2% 60% 2.5% 0.5%">下载</el-button>
-                <a :herf="pdfUrl" id = "download" v-if = "false" download = "employeeId.pdf"></a>
-                <el-button type="primary" key="2"  @click="send" >转送</el-button>
+                <el-button type="primary" key="1"  @click="showAll"
+                style="margin: 2% 60% 2.5% 0.5%">展开</el-button>
+                <el-button type="primary" key="2"  @click="send" >推送</el-button>
                 <el-button key="3" v-if="unlocked" @click="lock">锁定</el-button>
                 <el-button key="4" v-if="!unlocked" @click="lock">解锁</el-button>
         </div>
         <div v-if="gotResumed">
-            <pdf :src='pdfUrl' ref="app" v-for="i in 5" :key="i" :page="i" style="height: 180%;  width: 85%" ></pdf>
-            <!-- <iframe  src="http://127.0.0.1:8240/static/190822.pdf" frameborder="0" width="100%" height="900px"></iframe> -->
+            <pdf :src='pdfUrl' style="height: 180%;  width: 85%" ></pdf>
         </div>
         <div v-if="!gotResumed">
             <img src="static/images/mideabear.jpg"  height="100%" width="100%" >
         </div>
-         <!-- <BackToTop target=".page-component__scroll .el-scrollbar__wrap" :bottom="100"></BackToTop> -->
     </div>
 </template>
 
@@ -25,6 +22,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import Qs from 'qs'
 import pdf from 'vue-pdf'
+import $ from 'jquery'
 // import filesaver from 'file-saver'
 // var FileSaver = require('file-saver')
 export default {
@@ -56,7 +54,7 @@ export default {
     })
     // 向后台请求PDF文件
     if (_self.employeeId !== '' && _self.employeeId !== null) { // 如果选中的employeeId不为空，则向后台请求简历数据
-      if (_self.getResume()) {
+      if (_self.getResume()) { // 尝试请求简历数据
         _self.gotResumed = true
         Message({
           type: 'success',
@@ -108,15 +106,14 @@ export default {
           }
         }
       )
-      return true
     },
-    download () {
+    showAll () {
       let _self = this
-      _self.chooseType = 1 // 1代表选择的是下载选项
-      //   _self.handleChoose()
-      //   var file = new File([this.pdfUrl], { type: 'text/plain;charset=utf-8' })
-      //   FileSaver.saveAs(file, '1.pdf')
-      document.getElementById('download').click()
+      _self.chooseType = 1 // 1代表选择的是全部展开选项
+      var $eleForm = $("<form method='get'></form>")
+      $eleForm.attr('action', this.pdfUrl)
+      $(document.body).append($eleForm)
+      $eleForm.submit()
     },
     send () {
       let _self = this
@@ -128,7 +125,7 @@ export default {
       _self.chooseType = 3 // 3代表选择的是锁定选项
       _self.handleChoose()
     },
-    handleChoose () {
+    handleChoose () { // 推送和锁定的执行函数
       let _self = this
       let loadingInstance = Loading.service({
         text: '请稍等...',

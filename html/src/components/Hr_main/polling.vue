@@ -140,7 +140,7 @@ export default {
       message: this.cotent,
       form: {
         name: '', // 姓名
-        region: [], // 应聘者来源
+        region: '', // 应聘者来源
         sex: '', // 性别
         time: '', // 应聘时间
         jobRegin: '', // 应聘岗位
@@ -150,8 +150,8 @@ export default {
       },
       pageIndex: 0, // 初始化页数
       resultTotal: 0, // 数据总数
-      flagChecked: false,
-      chileDhecked: false,
+      flagChecked: false, // 是否全选
+      chileDhecked: false, // 用来控制子标签是否选中
       region: ['山东', '北京', '上海', '广州'], // 应聘者来源
       time: ['2019-8', '2019-9', '2019-7'], // 可供选择简历投递时间
       jobRegin: ['IT开发工程师', '应用工程师', '业务经理', '营销经理'], // 可供选择岗位
@@ -309,6 +309,10 @@ export default {
           if (res.data) {
             _self.tableData = res.data.tableData
             _self.resultTotal = res.data.resultTotal
+            Message({
+              type: 'success',
+              message: '查询成功'
+            })
             loadingInstance.close()
           }
         }, function (response) { // 如果返回错误，则提错
