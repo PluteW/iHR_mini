@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueBus from 'vue-bus'
 import {
   Table,
   Tooltip,
@@ -46,7 +47,9 @@ import {
   Step,
   Collapse,
   CollapseItem,
-  Notification
+  Notification,
+  TabPane,
+  Tabs
 } from 'element-ui'
 const components = [
   Row,
@@ -89,12 +92,14 @@ const components = [
   Steps,
   Step,
   Collapse,
-  CollapseItem
+  CollapseItem,
+  TabPane,
+  Tabs
 ]
 components.forEach(element => {
   Vue.component(element.name, element)
 })
-
+// Vue.component(pdf, pdf)
 Vue.prototype.$message = Message
 Vue.prototype.$msgbox = MessageBox
 Vue.prototype.$alert = MessageBox.alert
@@ -102,6 +107,7 @@ Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.baseURL = process.env.API_URL
 Vue.prototype.$notify = Notification
 
+Vue.use(VueBus)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
