@@ -18,7 +18,6 @@
 </template>
 
 <script>
-// import { Message } from 'element-ui'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 export default {
@@ -73,9 +72,9 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 #head{
   list-style: none

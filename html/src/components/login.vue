@@ -25,7 +25,7 @@
 <script src="//unpkg.com/vue/dist/vue.js"></script>
 <script src="//unpkg.com/element-ui@2.11.0/lib/index.js"></script>
 <script>
-import ElementUI, { Loading } from 'element-ui'
+import ElementUI, { Loading, Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import Qs from "qs"
