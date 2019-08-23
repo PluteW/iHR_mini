@@ -5,7 +5,7 @@
           <el-row>
               <el-col :span="6">
                   <el-form-item label="岗位名称：" label-width="100px" label-position = 'right'>
-                      <el-input v-model="form.name"></el-input>
+                      <el-input v-model="form.name" placeholder="请输入岗位名"></el-input>
                   </el-form-item>
               </el-col>
               <el-col :span="7">
@@ -36,9 +36,9 @@
                       </el-select>
                   </el-form-item>
               </el-col>
-              <el-col :span="5"  label-width="100px" >
+              <el-col :span="6"  label-width="100px" >
                   <el-form-item label="招聘人数：" label-position = 'right'>
-                      <el-input v-model="form.account"></el-input>
+                      <el-input v-model="form.account" placeholder="请输入人数"></el-input>
                   </el-form-item>
               </el-col>
           </el-row>

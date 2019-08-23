@@ -5,7 +5,7 @@
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="姓名：" label-width="90px" label-position = 'right'>
-                            <el-input v-model="form.name"></el-input>
+                            <el-input v-model="form.name" placeholder="请输入姓名"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
