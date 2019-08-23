@@ -86,31 +86,6 @@ import { Loading, Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import Qs from 'qs'
-const informationData = [{
-  id: '1234234',
-  name: 'IT开发工程师',
-  location: '广州',
-  salary: '3000',
-  status: '申请中'
-}, {
-  id: '1234234',
-  name: 'IT开发工程师',
-  location: '广州',
-  salary: '3000',
-  status: '申请中'
-}, {
-  id: '1234234',
-  name: 'IT开发工程师',
-  location: '广州',
-  salary: '3000',
-  status: '申请中'
-}, {
-  id: '1234234',
-  name: 'IT开发工程师',
-  location: '广州',
-  salary: '3000',
-  status: '申请中'
-}]
 // let loadingInstance = Loading.service({
 //   text: '请稍等...',
 //   target: document.querySelector('.loadingtext')
@@ -136,7 +111,31 @@ export default {
       jobRegin: ['开发岗', '管理岗', '技术岗', '人力岗', '财务岗'], // 可供选择岗位职类
       eduBackGround: ['专科及以上', '本科及以上', '研究生及以上', '博士', '留学生'], // 学历要求
       status: ['申请中', '简历筛选', '面试', '岗位确定', '过期'], // 可供选择岗位状态
-      informationData: informationData
+      informationData: [{
+        id: '1234234',
+        name: 'IT开发工程师',
+        location: '广州',
+        salary: '3000',
+        status: '申请中'
+      }, {
+        id: '1234234',
+        name: 'IT开发工程师',
+        location: '广州',
+        salary: '3000',
+        status: '申请中'
+      }, {
+        id: '1234234',
+        name: 'IT开发工程师',
+        location: '广州',
+        salary: '3000',
+        status: '申请中'
+      }, {
+        id: '1234234',
+        name: 'IT开发工程师',
+        location: '广州',
+        salary: '3000',
+        status: '申请中'
+      }]
     }
   },
   mounted: function () {
@@ -151,8 +150,7 @@ export default {
         method: 'post',
         url: 'ccs/', // 页面初始化，请求数据地址
         data: {
-          form: _self.form, // 空白表单用于全部查询
-          chooseType: _self.chooseType
+          form: '' // 空白表单用于全部查询
         },
         transformRequest: [function (data) {
           var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -164,12 +162,12 @@ export default {
     ).then(
       function (res) { // 如果返回数据，则放到展示中
         if (res.data) {
-          _self.informationData = res.data.informationData
-          _self.region = res.data.region
-          _self.time = res.data.time
-          _self.eduBackGround = res.data.eduBackGround
-          _self.status = res.data.status
-          _self.jobRegin = res.data.jobRegin
+          _self.informationData = res.data.informationData // 全部工作列表
+          _self.region = res.data.region // 工作地区列表
+          _self.time = res.data.time // 到岗时间列表
+          _self.eduBackGround = res.data.eduBackGround // 教育背景列表
+          _self.status = res.data.status // 岗位状态列表
+          _self.jobRegin = res.data.jobRegin // 岗位类别列表
           Message({
             type: 'success',
             message: '查询成功'
@@ -201,7 +199,12 @@ export default {
           url: 'ccs/', // 请求数据地址
           data: {
             form: _self.form, // 保存了数据的表单对象
-            chooseType: _self.chooseType
+            chooseType: _self.chooseType, // 状态码
+            region: _self.region, // 工作地区列表
+            time: _self.time, // 到岗时间列表
+            eduBackGround: _self.eduBackGround, // 教育背景列表
+            status: _self.status, // 岗位状态列表
+            jobRegin: _self.jobRegin // 岗位类别列表
           },
           transformRequest: [function (data) {
             var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -257,18 +260,18 @@ export default {
     },
     hold () {
       let _self = this
-      _self.chooseType = 1
+      _self.chooseType = 1 // 收藏
       _self.handleSubmit()
     },
     delet () {
       let _self = this
-      _self.chooseType = 2
+      _self.chooseType = 2 // 取消显示
       _self.handleSubmit()
     },
     detail (item) { // 转到详情页
       console.log(item)
       let _self = this
-      _self.chooseType = 3
+      _self.chooseType = 3 // 转到详情页
       this.$bus.emit('jobId', item.id)
       this.$emit('func', 'detail')
     }

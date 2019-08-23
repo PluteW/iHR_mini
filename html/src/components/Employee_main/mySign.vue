@@ -30,37 +30,36 @@ import { Loading, Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import Qs from 'qs'
-const informationData = [{
-  id: '1234234',
-  name: 'IT开发工程师',
-  location: '广州',
-  salary: '3000',
-  status: '申请中'
-}, {
-  id: '1234234',
-  name: 'IT开发工程师',
-  location: '广州',
-  salary: '3000',
-  status: '申请中'
-}, {
-  id: '1234234',
-  name: 'IT开发工程师',
-  location: '广州',
-  salary: '3000',
-  status: '申请中'
-}, {
-  id: '1234234',
-  name: 'IT开发工程师',
-  location: '广州',
-  salary: '3000',
-  status: '申请中'
-}]
 export default {
   name: 'polling',
   props: ['cotent'],
   data () {
     return {
-      informationData: informationData
+      informationData: [{
+        id: '1234234',
+        name: 'IT开发工程师',
+        location: '广州',
+        salary: '3000',
+        status: '申请中'
+      }, {
+        id: '1234234',
+        name: 'IT开发工程师',
+        location: '广州',
+        salary: '3000',
+        status: '申请中'
+      }, {
+        id: '1234234',
+        name: 'IT开发工程师',
+        location: '广州',
+        salary: '3000',
+        status: '申请中'
+      }, {
+        id: '1234234',
+        name: 'IT开发工程师',
+        location: '广州',
+        salary: '3000',
+        status: '申请中'
+      }]
     }
   },
   mounted: function () {
@@ -75,6 +74,7 @@ export default {
         method: 'post',
         url: 'ccs/', // 页面初始化，请求数据地址
         data: {
+          // employeeId: localStorage.getItem('userdata').id // 用户的id
         },
         transformRequest: [function (data) {
           var params = Qs.stringify(data, { arrayFormat: 'brackets' })

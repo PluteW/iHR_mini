@@ -140,7 +140,7 @@ export default {
         time: '', // 应聘时间
         jobRegin: '', // 应聘岗位
         status: '', // 简历状态
-        eduBackGround: [], // 学历选择项
+        eduBackGround: '', // 学历选择项
         age: '' // 年龄
       },
       pageIndex: 0, // 初始化页数
@@ -255,6 +255,52 @@ export default {
       }]
     }
   },
+  mounted () {
+    let _self = this
+    let loadingInstance = Loading.service({
+      text: '请稍等...',
+      target: document.querySelector('.loadingtext')
+    })
+    axios(
+      {
+        method: 'post',
+        url: 'ccs/', // 请求数据地址
+        data: {
+          form: '' // 空表单提交，请求原始选项数据
+        },
+        transformRequest: [function (data) {
+          var params = Qs.stringify(data, { arrayFormat: 'brackets' })
+          return params
+        }],
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        timeout: 15000
+      }
+    ).then(
+      function (res) { // 如果返回数据，则放到列表的选择项中
+        if (res.data) {
+          _self.region = res.data.region // 应聘者来源
+          _self.time = res.data.time // 可供选择简历投递时间
+          _self.jobRegin = res.data.jobRegin // 可供选择岗位
+          _self.status = res.data.status // 可供选择简历状态
+          _self.age = res.data.age // 可供选择的年龄范围
+          Message({
+            type: 'success',
+            message: '选项更新成功'
+          })
+          loadingInstance.close()
+        }
+      }, function (response) { // 如果返回错误，则提错
+        if (response) {
+          loadingInstance.close()
+          Message({
+            type: 'error',
+            message: response
+          })
+        }
+      }
+    )
+    loadingInstance.close()
+  },
   methods: {
     handleTableSelection (val) {
       this.multipleSelection = val
@@ -290,7 +336,13 @@ export default {
           url: 'ccs/', // 请求数据地址
           data: {
             form: _self.form, // 保存了数据的对象
-            pageIndex: _self.pageIndex
+            pageIndex: _self.pageIndex, // 当前页码
+            region: _self.region, // 应聘者来源
+            time: _self.time, // 可供选择简历投递时间
+            jobRegin: _self.jobRegin, // 可供选择岗位
+            status: _self.status, // 可供选择简历状态
+            age: _self.age, // 可供选择的年龄范围
+            eduBackGroundOptions: _self.eduBackGroundOptions // 教育背景选择列表
           },
           transformRequest: [function (data) {
             var params = Qs.stringify(data, { arrayFormat: 'brackets' })

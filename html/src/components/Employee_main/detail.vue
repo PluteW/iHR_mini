@@ -14,25 +14,25 @@
                   岗  位：
               </div>
               <div class="name">
-                {{jobDta.name}}
+                {{jobData.name}}
               </div>
               <div class="locationTitle">
                 工作地点：
               </div>
               <div class="location">
-                {{jobDta.location}}
+                {{jobData.location}}
               </div>
               <div class="statusTitle">
                 岗位状态：
               </div>
               <div class="status">
-                {{jobDta.status}}
+                {{jobData.status}}
               </div>
               <div class="salaryTitle">
                 薪资待遇：
               </div>
               <div class="salary">
-                {{jobDta.salary}}/月
+                {{jobData.salary}}/月
               </div>
             </div>
         </div>
@@ -49,19 +49,18 @@ import axios from 'axios'
 import Qs from 'qs'
 // import filesaver from 'file-saver'
 // var FileSaver = require('file-saver')
-const jobDta = {
-  name: 'IT开发工程师',
-  location: '广州佛山',
-  salary: '3000',
-  status: '投递中'
-}
 export default {
   data () {
     return {
       gotinfored: false, // 默认没有获得数据，相关内容不显示
       jobId: localStorage.getItem('jobId'), // 获取jobid
       chooseType: 0, // 选项初始化 0 1收藏 2删除 3投递
-      jobDta: jobDta // 表格初始化数据
+      jobData: {
+        name: 'IT开发工程师',
+        location: '广州佛山',
+        salary: '3000',
+        status: '投递中'
+      } // 表格初始化数据
     }
   },
   mounted: function () {
@@ -119,7 +118,7 @@ export default {
       ).then(
         function (res) { // 如果返回数据，则放到表格中
           if (res.data) {
-            _self.tableDta = res.data.tableDta // 获取工作数据地址
+            _self.jobData = res.data.jobData // 获取工作数据地址
             return true
           }
         }, function (response) { // 如果返回错误，则报错
