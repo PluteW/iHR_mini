@@ -10,18 +10,30 @@
         </div>
         <div v-if="gotinfored">
             <div>
-              <div>
-                  岗  位：{{jobDta.name}}
-                </div>
-                <div>
-                  工作地点：{{jobDta.location}}
-                </div>
-                <div>
-                  岗位状态：{{jobDta.status}}
-                </div>
-                <div>
-                  薪资待遇：{{jobDta.salary}}/月
-                </div>
+              <div class="nameTitle">
+                  岗  位：
+              </div>
+              <div class="name">
+                {{jobDta.name}}
+              </div>
+              <div class="locationTitle">
+                工作地点：
+              </div>
+              <div class="location">
+                {{jobDta.location}}
+              </div>
+              <div class="statusTitle">
+                岗位状态：
+              </div>
+              <div class="status">
+                {{jobDta.status}}
+              </div>
+              <div class="salaryTitle">
+                薪资待遇：
+              </div>
+              <div class="salary">
+                {{jobDta.salary}}/月
+              </div>
             </div>
         </div>
         <div v-if="!gotinfored">
@@ -180,3 +192,46 @@ export default {
   }
 }
 </script>
+<style>
+.nameTitle{
+  margin-left: 30%;
+  margin-top: 15px;
+  font-size: 28px
+}
+.name{
+  margin-left: 50%;
+  margin-top: 10px;
+  font-size: 24px
+}
+.locationTitle{
+  margin-left: 30%;
+  margin-top: 15px;
+  font-size: 28px
+}
+.location{
+  margin-left: 50%;
+  margin-top: 10px;
+  font-size: 24px
+}
+.statusTitle{
+  margin-left: 30%;
+  margin-top: 15px;
+  font-size: 28px
+}
+.status{
+  color: cornflowerblue;
+  margin-left: 50%;
+  margin-top: 10px;
+  font-size: 24px
+}
+.salaryTitle{
+  margin-left: 30%;
+  margin-top: 15px;
+  font-size: 28px
+}
+.salary{
+  margin-left: 50%;
+  margin-top: 10px;
+  font-size: 24px
+}
+</style>
