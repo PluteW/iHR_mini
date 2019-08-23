@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="margin: 40px 40px auto 40px">
+        <div style="margin: 40px 40px auto 90px">
             <el-form ref="form" :model="form" label-width="120px">
                 <el-row>
                     <el-col :span="6">
@@ -21,11 +21,6 @@
                             <el-select v-model="form.jobRegin" placeholder="请选择应聘岗位" clearable>
                                 <el-option v-for="(item,index) in jobRegin" :key="index" :value="index" :label="item" ></el-option>
                             </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="即时配送">
-                            <el-switch v-model="form.delivery"></el-switch>
                         </el-form-item>
                     </el-col>
                 </el-row>
