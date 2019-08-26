@@ -13,6 +13,24 @@
         <div v-if="!gotResumed">
             <img src="static/images/mideabear.jpg"  height="100%" width="100%" >
         </div>
+        <el-dialog title="推送目标" :visible.sync="dialogVisible">
+          <el-table align="center" style="width: 80%; margin:auto" border :data="tableData" @selection-change="handleSelectionChange" tooltip-effect="dark">
+            <el-table-column type="selection" :reserve-selection="true"  width="55" align="center"></el-table-column>
+            <el-table-column label="工号" align="center">
+                <template slot-scope="scope" align="center">{{ scope.row.id }}</template>
+            </el-table-column>
+            <el-table-column label="姓名"  align="center">
+                <template slot-scope="scope" align="center">{{ scope.row.name }}</template>
+            </el-table-column>
+            <el-table-column label="岗位"  align="center">
+                <template slot-scope="scope" align="center">{{ scope.row.job }}</template>
+            </el-table-column>
+          </el-table>
+          <div style="margin-top:3%;margin-left:60%">
+            <el-button style="margin-right:10%" type="primary" @click="handleSend" > 确认</el-button>
+            <el-button  @click="deletSend" > 取消</el-button>
+          </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -29,13 +47,27 @@ export default {
   name: 'app',
   data () {
     return {
-      gotResumed: false,
-      employeeId: localStorage.getItem('employeeId'),
-      chooseType: 0,
+      dialogVisible: false, // 是否显示弹窗，默认不显示
+      gotResumed: false, // 判断是否已经获得了简历数据，默认为未获取到
+      employeeId: localStorage.getItem('employeeId'), // 应聘编号
+      chooseType: 0, // 选择的操作类型
       unlocked: true, // 当前简历是否已经锁定
       pdfUrl: 'static/190822.pdf', // 展示简历用的数据
-      currentPage: 0,
-      pageCount: 0
+      tableData: [{ // 测试用假数据，推送目标
+        id: '123456',
+        name: '蒋小刀',
+        job: '产品经理'
+      }, {
+        id: '345678',
+        name: '刘小川',
+        job: '项目经理'
+      }, {
+        id: '633566',
+        name: '王小天',
+        job: '产品经理'
+      }],
+      multipleSelection: [], // 弹框列表中，选中行的人员id列表，默认未选中
+      chooseId: [] // 选中的推送人员id
     }
   },
   components: {
@@ -61,10 +93,6 @@ export default {
           message: '简历获取成功！'
         })
       } else {
-        Message({
-          type: 'error',
-          message: '数据获取失败！'
-        })
       }
     } else {
       Message({
@@ -83,7 +111,6 @@ export default {
           method: 'post',
           url: 'ccs/', // 请求简历的地址
           data: {
-            chooseType: _self.chooseType, // 选项的代号，
             employeeId: _self.employeeId // 此时的应聘者的代号
           },
           transformRequest: [function (data) {
@@ -98,14 +125,20 @@ export default {
           if (res.data) {
             _self.pdfUrl = res.data.pdfUrl // 获取简历数据地址
             _self.unlocked = res.data.unlocked // 获取简历状态
+            _self.tableData = res.data.tableData // hr可选列表
             return true
           }
         }, function (response) { // 如果返回错误，则报错
           if (response) {
+            Message({
+              type: 'error',
+              message: response
+            })
             return false
           }
         }
       )
+      return true
     },
     showAll () {
       let _self = this
@@ -118,7 +151,22 @@ export default {
     send () {
       let _self = this
       _self.chooseType = 2 // 2代表选择的是转送选项
-      _self.handleChoose()
+      _self.dialogVisible = true // 打开dialog选项框
+    },
+    handleSend () {
+      let _self = this
+      _self.handleChoose() // 处理提交
+      for (let item in _self.multipleSelection) {
+        _self.chooseId.push(_self.multipleSelection[item]['id'])
+      }
+      console.log(_self.chooseId)
+      _self.dialogVisible = false // 选择框隐藏
+    },
+    deletSend () {
+      let _self = this
+      _self.dialogVisible = false // dialog选项框关闭
+      _self.multipleSelection = [] // 选中框置零
+      _self.chooseId = [] // 数据保存位置的选中id置空
     },
     lock () {
       let _self = this
@@ -137,7 +185,9 @@ export default {
           url: 'ccs/', // 对选中的简历文件进行处理，提交请求
           data: {
             chooseType: _self.chooseType, // 选项的代号
-            employeeId: _self.employeeId // 此时的应聘者的代号
+            employeeId: _self.employeeId, // 此时的应聘者的代号
+            // hrId: localStorage.getItem('userdata').id // 操作者id
+            chooseId: _self.chooseId // 保存提交目标的id
           },
           transformRequest: [function (data) {
             var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -158,6 +208,10 @@ export default {
               message: '操作成功'
             })
           }
+          Message({
+            type: 'error',
+            message: '后台处理错误'
+          })
         }, function (response) { // 如果返回错误，则提错
           if (response) {
             loadingInstance.close()
@@ -168,6 +222,10 @@ export default {
           }
         }
       )
+    },
+    handleSelectionChange (val) { // 当弹出框的选择框发生更改后触发储存的改变
+      this.multipleSelection = val // 这是一个数组 将选中的值进行重新赋值然后将里面的id进行保存
+      console.log(this.multipleSelection)
     }
   }
 }

@@ -1,26 +1,26 @@
 <template>
-    <div id="app">
-        <div id = "outer">
-            <div id = 'continer'>
-                <div id = "title">
-                    登      录
-                </div>
-                <div class="form_title_name">
-                    <a>账 号：</a>
-                    <a><input id = "username" type="text" v-model="usernameValue"></a>
-                </div>
-                <div class="form_title_pass">
-                    <a>密  码：</a>
-                    <a><input id = "password" type="password" v-model="passwordValue"></a>
-                </div>
-                <span id = "errorMsg_span" v-show="errorMsg !== ''"></span>{{errorMsg}}
-                <li style="list-style: none">
-                    <el-button id = "btn_login" @click="login()">登录</el-button>
-                    <el-button id = "btn_reset" @click="reset()">重置</el-button>
-                </li>
-            </div>
-        </div>
-    </div>
+  <div id="app">
+      <div id = "outer">
+        <div id = 'continer'>
+          <div id = "title">
+              登      录
+          </div>
+          <div class="form_title_name">
+            <a>账 号：</a>
+            <a><input id = "username" type="text" v-model="usernameValue"></a>
+          </div>
+          <div class="form_title_pass">
+            <a>密  码：</a>
+            <a><input id = "password" type="password" v-model="passwordValue"></a>
+          </div>
+          <span id = "errorMsg_span" v-show="errorMsg !== ''"></span>{{errorMsg}}
+          <li style="list-style: none">
+            <el-button id = "btn_login" @click="login()">登录</el-button>
+            <el-button id = "btn_reset" @click="reset()">重置</el-button>
+        </li>
+      </div>
+      </div>
+  </div>
 </template>
 <script src="//unpkg.com/vue/dist/vue.js"></script>
 <script src="//unpkg.com/element-ui@2.11.0/lib/index.js"></script>
@@ -32,64 +32,86 @@ import Qs from "qs"
 export default {
   name: 'App',
   data () {
-      return{
-          usernameValue: "",
-          passwordValue: "",
-          errorMsg:""
+    return{
+      usernameValue: "",
+      passwordValue: "",
+      errorMsg:""
+    }
+  },
+  mounted: function () {
+    let loadingInstance = Loading.service({
+          text: '请稍等...',
+          target: document.querySelector('.loadingtext')
+        });
+    let userdata = localStorage.getItem('userdata')
+    if (userdata !== '' && userdata !== undefined && userdata !== null){
+      if (userdata.state === 1){
+        window.location.href = '/emain'
+      } else {
+        loadingInstance.close()
       }
+    } else {
+      loadingInstance.close()
+    }
   },
   methods: {
-      login () {
-        const _self = this;
-        if (_self.usernameValue == "" || _self.passwordValue == "") { // 账号和密码任一个为空，报错
-            _self.errorMsg = 'Please input valid username and password'
-            return
-        } // 提交账号密码，接收返回值
-        let loadingInstance = Loading.service({
-            text: '请稍等...',
-            target: document.querySelector('.loadingtext')
-        });
-        axios(
-            {
-                method: 'post',
-                url: 'ccs/',
-                data: {
-                    username: _self.usernameValue,
-                    password: _self.passwordValue
-                },
-                transformRequest: [function (data) {
-                var params = Qs.stringify(data, { arrayFormat: 'brackets' })
-                return params;
-                }],
-                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-                timeout: 15000
-            }
-        ).then(
-            function (res) {
-                if (res.data) {
-                    loadingInstance.close();
-                    localStorage.setItem('userdata', res.data);
-                    window.location.href = '/main' // 跳转到主页面
-                }
-            }, function (response) { // 如果返回错误，则提错
-                if (response) {
-                loadingInstance.close();
-                _self.errorMsg = 'Please input valid username and password'
-                Message({
-                    type: 'warning',
-                    message: '登录失败'
-                })
-                return
-                }
-            }
-        )
-      },
-      reset () {
-          let _self = this;
-          _self.usernameValue = "",
-          _self.passwordValue = "",
-          _self.errorMsg = ''
-      }
+    login () {
+      const _self = this;
+      if (_self.usernameValue == "" || _self.passwordValue == "") { // 账号和密码任一个为空，报错
+        _self.errorMsg = 'Please input valid username and password'
+        return
+      } // 提交账号密码，接收返回值
+      let loadingInstance = Loading.service({
+        text: '请稍等...',
+        target: document.querySelector('.loadingtext')
+      });
+      axios(
+        {
+          method: 'post',
+          url: 'ccs/',
+          data: {
+              username: _self.usernameValue,
+              password: _self.passwordValue
+          },
+          transformRequest: [function (data) {
+          var params = Qs.stringify(data, { arrayFormat: 'brackets' })
+          return params;
+          }],
+          headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+          timeout: 15000
+        }
+      ).then(
+        function (res) {
+          if (res.data.result) {
+              loadingInstance.close();
+              localStorage.setItem('userdata', res.data.userdata);
+              window.location.href = '/hmain' // 跳转到主页面
+          } else {
+            this.reset
+            Message({
+              type: 'warring',
+              message: '登录信息错误'
+            })
+            loadingInstance.close();
+          }
+        }, function (response) { // 如果返回错误，则提错
+          if (response) {
+          loadingInstance.close();
+          Message({
+              type: 'warning',
+              message: '登录失败'
+          })
+          return
+          }
+        }
+      )
+    },
+    reset () {
+      let _self = this;
+      _self.usernameValue = "",
+      _self.passwordValue = "",
+      _self.errorMsg = ''
+    }
   }
 }
 </script>

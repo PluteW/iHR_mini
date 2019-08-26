@@ -73,9 +73,6 @@ import { Loading, Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import Qs from 'qs'
-const eduBackGround = ['专科及以上', '本科及以上', '研究生及以上', '博士', '留学生']
-const jobCategray = ['开发岗', '管理岗', '技术岗', '人力岗', '财务岗']
-const salaryOption = ['面议', '3000以上', '6000以上', '9000以上', '12000以上']
 // let loadingInstance = Loading.service({
 //   text: '请稍等...',
 //   target: document.querySelector('.loadingtext')
@@ -98,10 +95,50 @@ export default {
         salary: '' // 薪资待遇
       },
       region: ['山东', '北京', '上海', '广州'], // 应聘者来源
-      salaryOption: salaryOption, // 薪资范围
-      jobCategray: jobCategray, // 岗位范围
-      eduBackGround: eduBackGround // 学历选项
+      salaryOption: ['面议', '3000以上', '6000以上', '9000以上', '12000以上'], // 薪资范围
+      jobCategray: ['开发岗', '管理岗', '技术岗', '人力岗', '财务岗'], // 岗位范围
+      eduBackGround: ['专科及以上', '本科及以上', '研究生及以上', '博士', '留学生'] // 学历选项
     }
+  },
+  mounted () { // 表格选择项初始化
+    let _self = this
+    let loadingInstance = Loading.service({
+      text: '请稍等...',
+      target: document.querySelector('.loadingtext')
+    })
+    axios(
+      {
+        method: 'post',
+        url: 'ccs/', // 请求数据地址
+        data: {
+          form: '' // 申请标志符
+        },
+        transformRequest: [function (data) {
+          var params = Qs.stringify(data, { arrayFormat: 'brackets' })
+          return params
+        }],
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        timeout: 15000
+      }
+    ).then(
+      function (res) { // 如果返回数据，则放到表格中
+        if (res.data) {
+          _self.region = res.data.region // 可选择的工作地区
+          _self.salaryOption = res.data.salaryOption // 可选择的薪资水平
+          _self.jobCategray = res.data.jobCategray // 可选择的工作分类
+          _self.eduBackGround = res.data.eduBackGround // 可选则的教育背景
+          loadingInstance.close()
+        }
+      }, function (response) { // 如果返回错误，则提错
+        if (response) {
+          loadingInstance.close()
+          Message({
+            type: 'error',
+            message: response
+          })
+        }
+      }
+    )
   },
   methods: {
     handleSubmit () { // 处理发布动作
@@ -115,6 +152,10 @@ export default {
           method: 'post',
           url: 'ccs/', // 请求数据地址
           data: {
+            region: _self.region, // 可选择的工作地区
+            salaryOption: _self.salaryOption, // 可选择的薪资水平
+            jobCategray: _self.jobCategray, // 可选择的工作分类
+            eduBackGround: _self.eduBackGround, // 可选则的教育背景
             form: _self.form // 保存了数据的对象
           },
           transformRequest: [function (data) {

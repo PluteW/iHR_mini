@@ -10,7 +10,7 @@
             </div>
         </div>
         <div v-if="activeName === 'mySign'">
-            <mySign></mySign>
+            <mySign v-on:func = 'changeView'></mySign>
         </div>
         <div v-if="activeName === 'polling'">
             <polling v-bind:cotent="activeName" v-on:func = 'changeView'></polling>
