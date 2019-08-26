@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ihr_mini.Mapper.HrMapper">
+    <resultMap id="hr" type="com.example.ihr_mini.Entity.Hr">
+        <id property="id" column="c_id" jdbcType="VARCHAR"/>
+        <result property="name" column="c_name" jdbcType="VARCHAR"/>
+        <result property="password" column="c_password" jdbcType="VARCHAR"/>
+        <result property="username" column="c_username" jdbcType="VARCHAR"/>
+        <result property="phone" column="c_phone_number" jdbcType="VARCHAR"/>
+        <result property="email" column="c_mail" jdbcType="VARCHAR"/>
+        <result property="state" column="c_state" jdbcType="INTEGER"/>
+        <result property="job" column="c_job" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getHrs" resultMap="hr">
+        select * from t_hr_infor
+    </select>
+    <select id="getName" resultType="String">
+        select c_name from t_hr_infor where c_id = #{id}
+    </select>
+    <select id="getusername" resultType="String">
+        select c_username from t_hr_infor where c_id = #{id}
+    </select>
+    <select id="getPass" resultType="String">
+        select c_password from t_hr_infor where c_id = #{id}
+    </select>
+    <select id="getId" resultType="String">
+        select c_id from t_hr_infor where c_username = #{username}
+    </select>
+    <select id="getPhone" resultType="String">
+        select c_phone_number from t_hr_infor where c_id = #{id}
+    </select>
+    <select id="getState" resultType="int">
+        select c_state from t_hr_infor where c_id = #{id}
+    </select>
+    <select id="getJob" resultType="String">
+        select c_job from t_hr_infor where c_id = #{id}
+    </select>
+</mapper>

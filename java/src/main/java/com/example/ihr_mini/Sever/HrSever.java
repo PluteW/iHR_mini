@@ -1,15 +1,13 @@
 package com.example.ihr_mini.Sever;
 
-import com.example.ihr_mini.Entity.HR;
-import com.example.ihr_mini.Mapper.HRMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.ihr_mini.Entity.Hr;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public interface HRSever {
-    public List<HR> getHRs();
+public interface HrSever {
+    public List<Hr> getHrs();
 
     public String getName(String id);
 
@@ -21,7 +19,7 @@ public interface HRSever {
 
     public String getPhone(String id);
 
-    public String getState(String id);
+    public int getState(String id);
 
     public String getJob(String id);
 }

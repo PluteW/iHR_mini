@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
  * 对应数据库里的t_hr_infor表，用于保存hr的数据
  */
 @Component
-public class hr_person {
+public class Hr {
 
     private String username;
     private String name;
