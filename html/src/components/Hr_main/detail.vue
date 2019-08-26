@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-if="gotResumed">
+        <div v-if="gotResumed" style="margin-left:8%">
                 <el-button type="primary" key="1"  @click="showAll"
-                style="margin: 2% 60% 2.5% 0.5%">展开</el-button>
+                style="margin: 2% 68% 2.5% 0.5%">展开</el-button>
                 <el-button type="primary" key="2"  @click="send" >推送</el-button>
                 <el-button key="3" v-if="unlocked" @click="lock">锁定</el-button>
                 <el-button key="4" v-if="!unlocked" @click="lock">解锁</el-button>
@@ -10,8 +10,8 @@
         <div v-if="gotResumed">
             <pdf :src='pdfUrl' style="height: 180%;  width: 85%" ></pdf>
         </div>
-        <div v-if="!gotResumed">
-            <img src="static/images/mideabear.jpg"  height="100%" width="100%" >
+        <div v-if="!gotResumed" style="margin-left:2%">
+            <img src="static/images/mideabear.jpg" width="80%" >
         </div>
         <el-dialog title="推送目标" :visible.sync="dialogVisible">
           <el-table align="center" style="width: 80%; margin:auto" border :data="tableData" @selection-change="handleSelectionChange" tooltip-effect="dark">
