@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ihr_mini.Mapper.CandidateMapper">
+    <resultMap id="Job" type="com.example.ihr_mini.Entity.Job">
+        <id property="id" column="c_id" jdbcType="VARCHAR"/>
+        <result property="location" column="c_location" jdbcType="VARCHAR"/>
+        <result property="scheduleTime" column="c_ScheduleTime" jdbcType="VARCHAR"/>
+        <result property="name" column="c_name" jdbcType="VARCHAR"/>
+        <result property="state" column="c_state" jdbcType="INTEGER"/>
+        <result property="operator" column="c_operator" jdbcType="VARCHAR"/>
+        <result property="account" column="c_account" jdbcType="INTEGER"/>
+        <result property="sex" column="c_sex" jdbcType="INTEGER"/>
+        <result property="timeBegin" column="c_timeBegin" jdbcType="VARCHAR"/>
+        <result property="timeEnd" column="c_timeEnd" jdbcType="VARCHAR"/>
+        <result property="salary" column="c_salary" jdbcType="VARCHAR"/>
+        <result property="more" column="c_more" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <select id="getJobs" resultMap="Job">
+        select * from t_jobs
+    </select>
+
+    <select id="getById" resultType="com.example.ihr_mini.Entity.Job">
+        select * from t_jobs where c_id = #{id}
+    </select>
+
+    <select id="getId" resultType="String">
+        select c_id from t_jobs where c_name = #{name}
+    </select>
+    <select id="getName" resultType="String">
+        select c_name from t_jobs where c_id = #{id}
+    </select>
+    <select id="getLocation" resultType="String">
+        select c_location from t_jobs where c_id = #{id}
+    </select>
+    <select id="getScheduleTime" resultType="String">
+        select c_ScheduleTime from t_jobs where c_id = #{id}
+    </select>
+    <select id="getAccount" resultType="int">
+        select c_account from t_jobs where c_mail = #{mail}
+    </select>
+    <select id="getTimeBegin" resultType="String">
+        select c_timeBegin from t_jobs where c_id = #{id}
+    </select>
+    <select id="getTimeEnd" resultType="String">
+        select c_timeEnd from t_jobs where c_id = #{id}
+    </select>
+    <select id="getSalary" resultType="String">
+        select c_salary from t_jobs where c_id = #{id}
+    </select>
+    <select id="getState" resultType="int">
+        select c_state from t_jobs where c_id = #{id}
+    </select>
+    <select id="getMore" resultType="String">
+        select c_more from t_jobs where c_id = #{id}
+    </select>
+    <select id="getSex" resultType="int">
+        select c_sex from t_jobs where c_id = #{id}
+    </select>
+
+
+    <update id="setName">
+        update t_jobs set c_name = #{name} where c_id = #{id}
+    </update>
+    <update id="setLocation">
+        update t_jobs set c_location = #{location} where c_id = #{id}
+    </update>
+    <update id="setScheduleTime">
+        update t_jobs set c_ScheduleTime = #{scheduleTime} where c_id = #{id}
+    </update>
+    <update id="setAccount">
+        update t_jobs set c_account = #{account} where c_id = #{id}
+    </update>
+    <update id="setTimeBegin">
+        update t_jobs set c_timeBegin = #{timeBegin} where c_id = #{id}
+    </update>
+    <update id="setTimeEnd">
+        update t_jobs set c_timeEnd = #{timeEnd} where c_id = #{id}
+    </update>
+    <update id="setSalary">
+        update t_jobs set c_salary = #{salary} where c_id = #{id}
+    </update>
+    <update id="setState">
+        update t_jobs set c_state = #{state} where c_id = #{id}
+    </update>
+    <update id="setMore">
+        update t_jobs set c_more = #{more} where c_id = #{id}
+    </update>
+    <update id="setSex">
+        update t_jobs set c_sex = #{sex} where c_id = #{id}
+    </update>
+
+    <insert id="addJob">
+        insert into t_jobs(c_name, c_location, c_scheduleTime, c_timeBegin, c_timeEnd, c_sex, c_account, c_salary, c_more)
+        values(#{name}, #{location}, #{ScheduleTime}, #{timeBegin}, #{timeEnd}, #{sex}, #{account}, #{salary, #{more})
+    </insert>
+
+</mapper>

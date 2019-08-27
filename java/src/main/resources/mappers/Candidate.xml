@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ihr_mini.Mapper.CandidateMapper">
+    <resultMap id="candidate" type="com.example.ihr_mini.Entity.Candidate">
+        <id property="id" column="c_id" jdbcType="VARCHAR"/>
+        <result property="mail" column="c_mail" jdbcType="VARCHAR"/>
+        <result property="pass" column="c_password" jdbcType="VARCHAR"/>
+        <result property="name" column="c_name" jdbcType="VARCHAR"/>
+        <result property="state" column="c_state" jdbcType="INTEGER"/>
+        <result property="operaterId" column="c_operator_id" jdbcType="VARCHAR"/>
+        <result property="phone" column="c_phone" jdbcType="VARCHAR"/>
+        <result property="picId" column="c_pic_id" jdbcType="VARCHAR"/>
+        <result property="age" column="c_age" jdbcType="INTEGER"/>
+        <result property="birthday" column="c_birthday" jdbcType="VARCHAR"/>
+        <result property="resumeId" column="c_resume_id" jdbcType="VARCHAR"/>
+        <result property="school" column="c_school" jdbcType="VARCHAR"/>
+        <result property="major" column="c_major" jdbcType="VARCHAR"/>
+        <result property="academic" column="c_academic" jdbcType="VARCHAR"/>
+        <result property="eduBackGround" column="c_eduBackGround" jdbcType="VARCHAR"/>
+        <result property="hometown" column="c_native" jdbcType="VARCHAR"/>
+        <result property="ownTbId" column="c_tbID" jdbcType="VARCHAR"/>
+        <result property="time" column="c_time" jdbcType="VARCHAR"/>
+        <result property="job" column="c_job" jdbcType="VARCHAR"/>
+        <result property="jobId" column="c_jobId" jdbcType="VARCHAR"/>
+        <result property="job_region" column="c_job_region" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getCandidates" resultMap="candidate">
+        select * from t_candidate_infor
+    </select>
+    <select id="getById" resultType="com.example.ihr_mini.Entity.Candidate">
+        select * from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getTime" resultType="String">
+        select c_time from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getJobId" resultType="String">
+        select c_jobId from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getJob" resultType="String">
+        select c_job from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getJob_region" resultType="String">
+        select c_job_region from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getId" resultType="String">
+        select c_id from t_candidate_infor where c_mail = #{mail}
+    </select>
+    <select id="getMail" resultType="String">
+        select c_mail from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getPass" resultType="String">
+        select c_password from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getName" resultType="String">
+        select c_name from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getState" resultType="int">
+        select c_state from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getOperaterId" resultType="String">
+        select c_operator_id from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getPhone" resultType="String">
+        select c_phone from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getPicId" resultType="String">
+        select c_pic_id from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getAge" resultType="int">
+        select c_age from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getBirthday" resultType="String">
+        select c_birthday from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getResumeId" resultType="String">
+        select c_resume_id from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getSchool" resultType="String">
+        select c_school from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getMajor" resultType="String">
+        select c_major from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getAcademic" resultType="String">
+        select c_academic from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getEduBackGround" resultType="String">
+        select c_eduBackGround from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getHometown" resultType="String">
+        select c_native from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getOwnTbId" resultType="String">
+        select c_tbID from t_candidate_infor where c_id = #{id}
+    </select>
+
+
+    <update id="setTime">
+        update t_candidate_infor set c_time = #{time} where c_id = #{id}
+    </update>
+    <update id="setJob">
+        update t_candidate_infor set c_job = #{job} where c_id = #{id}
+    </update>
+    <update id="setJobId">
+        update t_candidate_infor set c_jobId = #{jobId} where c_id = #{id}
+    </update>
+    <update id="setJob_region">
+        update t_candidate_infor set c_job_region = #{job_region} where c_id = #{id}
+    </update>
+    <update id="setMail">
+        update t_candidate_infor set c_mail = #{mail} where c_id = #{id}
+    </update>
+    <update id="setPass">
+        update t_candidate_infor set c_password = #{pass} where c_id = #{id}
+    </update>
+    <update id="setName">
+        update t_candidate_infor set c_name = #{name} where c_id = #{id}
+    </update>
+    <update id="setState">
+        update t_candidate_infor set c_state = #{state} where c_id = #{id}
+    </update>
+    <update id="setOperaterId">
+        update t_candidate_infor set c_operator_id = #{operaterId} where c_id = #{id}
+    </update>
+    <update id="setPhone">
+        update t_candidate_infor set c_phone = #{phone} where c_id = #{id}
+    </update>
+    <update id="setPicId">
+        update t_candidate_infor set c_pic_id = #{picId} where c_id = #{id}
+    </update>
+    <update id="setAge">
+        update t_candidate_infor set c_age = #{age} where c_id = #{id}
+    </update>
+    <update id="setBirthday">
+        update t_candidate_infor set c_birthday = #{birthday} where c_id = #{id}
+    </update>
+    <update id="setResumeId">
+        update t_candidate_infor set c_resume_id = #{resumeId} where c_id = #{id}
+    </update>
+    <update id="setSchool">
+        update t_candidate_infor set c_school = #{school} where c_id = #{id}
+    </update>
+    <update id="setMajor">
+        update t_candidate_infor set c_major = #{major} where c_id = #{id}
+    </update>
+    <update id="setAcademic">
+        update t_candidate_infor set c_academic = #{academic} where c_id = #{id}
+    </update>
+    <update id="setEduBackGround">
+        update t_candidate_infor set c_eduBackGround = #{eduBackGround} where c_id = #{id}
+    </update>
+    <update id="setHometown">
+        update t_candidate_infor set c_native = #{hometown} where c_id = #{id}
+    </update>
+    <update id="setOwnTbId">
+        update t_candidate_infor set c_tbID = #{ownTbId} where c_id = #{id}
+    </update>
+
+    <insert id="addCandidate">
+        insert into t_candidate_infor(id, mail, pass) values(#{id},#{mail}, #{pass})
+    </insert>
+
+</mapper>

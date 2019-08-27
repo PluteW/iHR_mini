@@ -8,11 +8,18 @@ import java.util.List;
 @Mapper
 public interface HrMapper {
     public List<Hr> getHrs();
+
     public String getName(String id);
+
     public String getUsername(String id);
+
     public String getPass(String id);
+
     public String getId(String username);
+
     public String getPhone(String id);
+
     public int getState(String id);
+
     public String getJob(String id);
 }
