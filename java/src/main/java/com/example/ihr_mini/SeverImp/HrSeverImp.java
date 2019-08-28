@@ -14,10 +14,29 @@ public class HrSeverImp implements HrSever {
     @Autowired
     private HrMapper hrMapper;
 
-
     @Override
     public List<Hr> getHrs() {
         return hrMapper.getHrs();
+    }
+
+    @Override
+    public Hr getById(String id){
+        return hrMapper.getById(id);
+    }
+
+    @Override
+    public List<String> getNames(){
+        return hrMapper.getNames();
+    }
+
+    @Override
+    public List<String> getIds(){
+        return hrMapper.getIds();
+    }
+
+    @Override
+    public List<String> getMails(){
+        return hrMapper.getMails();
     }
 
     @Override
@@ -53,5 +72,15 @@ public class HrSeverImp implements HrSever {
     @Override
     public String getJob(String id) {
         return hrMapper.getJob(id);
+    }
+
+    @Override
+    public String getPicId(String id){
+        return  hrMapper.getPicId(id);
+    }
+
+    @Override
+    public void setPicId(String picId,String id){
+        return;
     }
 }

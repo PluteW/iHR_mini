@@ -16,6 +16,8 @@ public interface RecumeMapper {
 
     public String getId(String name);
 
+    public List<String> getGraduates();
+
     public String getName(String id);
 
     public String getGraduate(String id);

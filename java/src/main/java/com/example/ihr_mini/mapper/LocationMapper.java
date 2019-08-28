@@ -12,6 +12,8 @@ public interface LocationMapper {
 
     public Location getById(String id);
 
+    public List<String> getNames();
+
     public String getId(String name);
 
     public String getName(String id);

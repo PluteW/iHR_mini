@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.ihr_mini.Mapper.CandidateMapper">
+<mapper namespace="com.example.ihr_mini.Mapper.RecumeMapper">
     <resultMap id="resume" type="com.example.ihr_mini.Entity.Recume">
         <id property="id" column="c_id" jdbcType="VARCHAR"/>
         <result property="graduate" column="c_graduate" jdbcType="VARCHAR"/>
@@ -15,6 +15,10 @@
 
     <select id="getById" resultType="com.example.ihr_mini.Entity.Recume">
         select * from t_resume where c_id = #{id}
+    </select>
+
+    <select id="getGraduates" resultMap="resume">
+        select distinct c_graduate from t_resume
     </select>
 
     <select id="getId" resultType="String">

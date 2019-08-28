@@ -6,17 +6,20 @@
         <result property="mail" column="c_mail" jdbcType="VARCHAR"/>
         <result property="pass" column="c_password" jdbcType="VARCHAR"/>
         <result property="name" column="c_name" jdbcType="VARCHAR"/>
-        <result property="state" column="c_state" jdbcType="INTEGER"/>
+        <result property="state" column="c_state" jdbcType="VARCHAR"/>
         <result property="operaterId" column="c_operator_id" jdbcType="VARCHAR"/>
         <result property="phone" column="c_phone" jdbcType="VARCHAR"/>
         <result property="picId" column="c_pic_id" jdbcType="VARCHAR"/>
         <result property="age" column="c_age" jdbcType="INTEGER"/>
+        <result property="sex" column="c_sex" jdbcType="INTEGER"/>
         <result property="birthday" column="c_birthday" jdbcType="VARCHAR"/>
         <result property="resumeId" column="c_resume_id" jdbcType="VARCHAR"/>
         <result property="school" column="c_school" jdbcType="VARCHAR"/>
         <result property="major" column="c_major" jdbcType="VARCHAR"/>
         <result property="academic" column="c_academic" jdbcType="VARCHAR"/>
+        <result property="graduate" column="c_graduate" jdbcType="VARCHAR"/>
         <result property="eduBackGround" column="c_eduBackGround" jdbcType="VARCHAR"/>
+        <result property="eduBackGroundId" column="c_eduBackGroundId" jdbcType="VARCHAR"/>
         <result property="hometown" column="c_native" jdbcType="VARCHAR"/>
         <result property="ownTbId" column="c_tbID" jdbcType="VARCHAR"/>
         <result property="time" column="c_time" jdbcType="VARCHAR"/>
@@ -24,11 +27,60 @@
         <result property="jobId" column="c_jobId" jdbcType="VARCHAR"/>
         <result property="job_region" column="c_job_region" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <select id="getByCondation" parameterType="map" resultMap="candidate">
+        select * from t_candidate_infor
+        <where>
+            <foreach collection="params.keys" item="item" separator="and">
+                <if test="params[item] !=  '-1'.toString() and params[item] != ''">
+                    ${item} like "${params[item]}%"
+                </if>
+            </foreach>
+        </where>
+    </select>
     <select id="getCandidates" resultMap="candidate">
         select * from t_candidate_infor
     </select>
     <select id="getById" resultType="com.example.ihr_mini.Entity.Candidate">
         select * from t_candidate_infor where c_id = #{id}
+    </select>
+    <select id="getStates" resultType="String">
+        select distinct c_state  from t_candidate_infor
+    </select>
+    <select id="getAges" resultType="Integer">
+        select distinct c_age from t_candidate_infor
+    </select>
+    <select id="getRegions" resultType="String">
+        select distinct c_native from t_candidate_infor
+    </select>
+    <select id="getMails" resultType="String">
+        select c_mail from t_candidate_infor
+    </select>
+    <select id="getNames" resultType="String">
+        select distinct c_name from t_candidate_infor
+    </select>
+    <select id="getEduBackGrounds" resultType="String">
+        select distinct c_eduBackGround from t_candidate_infor
+    </select>
+    <select id="getGraduates" resultType="String">
+        select distinct c_graduate from t_candidate_infor
+    </select>
+    <select id="getTimes" resultType="String">
+        select distinct c_time from t_candidate_infor
+    </select>
+    <select id="getJobs" resultType="String">
+        select distinct c_job from t_candidate_infor
+    </select>
+    <select id="getJobRegions" resultType="String">
+        select distinct c_job_region from t_candidate_infor
+    </select>
+    <select id="getJobIds" resultType="String">
+        select distinct c_jobId from t_candidate_infor
+    </select>
+
+
+    <select id="getGraduate" resultType="String">
+        select c_graduate from t_candidate_infor where c_id = #{id}
     </select>
     <select id="getTime" resultType="String">
         select c_time from t_candidate_infor where c_id = #{id}
@@ -54,7 +106,7 @@
     <select id="getName" resultType="String">
         select c_name from t_candidate_infor where c_id = #{id}
     </select>
-    <select id="getState" resultType="int">
+    <select id="getState" resultType="String">
         select c_state from t_candidate_infor where c_id = #{id}
     </select>
     <select id="getOperaterId" resultType="String">
@@ -66,7 +118,7 @@
     <select id="getPicId" resultType="String">
         select c_pic_id from t_candidate_infor where c_id = #{id}
     </select>
-    <select id="getAge" resultType="int">
+    <select id="getAge" resultType="Integer">
         select c_age from t_candidate_infor where c_id = #{id}
     </select>
     <select id="getBirthday" resultType="String">
@@ -87,6 +139,9 @@
     <select id="getEduBackGround" resultType="String">
         select c_eduBackGround from t_candidate_infor where c_id = #{id}
     </select>
+    <select id="getEduBackGroundId" resultType="String">
+        select getEduBackGroundId from t_candidate_infor where c_id = #{id}
+    </select>
     <select id="getHometown" resultType="String">
         select c_native from t_candidate_infor where c_id = #{id}
     </select>
@@ -95,6 +150,9 @@
     </select>
 
 
+    <update id="setGraduate">
+        update t_candidate_infor set c_graduate = #{graduate} where c_id = #{id}
+    </update>
     <update id="setTime">
         update t_candidate_infor set c_time = #{time} where c_id = #{id}
     </update>
@@ -148,6 +206,9 @@
     </update>
     <update id="setEduBackGround">
         update t_candidate_infor set c_eduBackGround = #{eduBackGround} where c_id = #{id}
+    </update>
+    <update id="setEduBackGroundId">
+        update t_candidate_infor set setEduBackGroundId = #{setEduBackGroundId} where c_id = #{id}
     </update>
     <update id="setHometown">
         update t_candidate_infor set c_native = #{hometown} where c_id = #{id}

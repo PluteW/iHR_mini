@@ -16,6 +16,7 @@ public class Hr {
     private  String email;
     private int state;
     private  String job;
+    private String picId;
 
     public void setName(String name) {
         this.name = name;
@@ -47,6 +48,14 @@ public class Hr {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPicId() {
+        return picId;
+    }
+
+    public void setPicId(String picId) {
+        this.picId = picId;
     }
 
     public void setPassword(String password) {

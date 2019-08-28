@@ -28,6 +28,11 @@ public class RecumeSeverImp implements RecumeSever {
     }
 
     @Override
+    public List<String> getGraduates(){
+        return recumeMapper.getGraduates();
+    }
+
+    @Override
     public String getId(String name) {
         return recumeMapper.getId(name);
     }

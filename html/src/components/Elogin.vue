@@ -70,9 +70,10 @@ export default {
           text: '请稍等...',
           target: document.querySelector('.loadingtext')
         });
-    let userdata = localStorage.getItem('userdata')
+    let data = localStorage.getItem('userdata')
+    let userdata = JSON.parse(data)
     if (userdata !== '' && userdata !== undefined && userdata !== null){
-      if (userdata.state === 1){
+      if (userdata.state === 0){
         window.location.href = '/emain'
       } else {
         loadingInstance.close()
@@ -122,7 +123,7 @@ export default {
           function (res) {
             if (res.data.result) {
               loadingInstance.close();
-              localStorage.setItem('userdata', res.data.userdata);
+              localStorage.setItem('userdata', JSON.stringify(res.data.userdata));
               window.location.href = '/emain' // 跳转到主页面
             } else {
               this.reset

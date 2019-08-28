@@ -12,6 +12,8 @@ public interface RecumeSever {
 
     public List<Recume> getResumes();
 
+    public List<String> getGraduates();
+
     public String getId(String name);
 
     public String getName(String id);

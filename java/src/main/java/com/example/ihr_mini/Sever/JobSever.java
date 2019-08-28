@@ -9,10 +9,25 @@ public interface JobSever {
 
     public void addJob(String name,String location,String ScheduleTime,String timeBegin,String timeEnd,int sex,int account, String salary, String more);
 
-
     public List<Job> getJobs();
 
+    public List<String> getIds();
+
+    public List<String> getCategorys();
+
+    public List<String> getLocations();
+
+    public List<String> getScheduleTimes();
+
+    public List<String> getTimBegins();
+
+    public List<String> getTimeEnds();
+
     public Job getById(String id);
+
+    public void setCategory(String category,String id);
+
+    public String getCategory(String id);
 
     public void setName(String name,String id);
 
@@ -28,7 +43,7 @@ public interface JobSever {
 
     public void setSalary(String salary,String id);
 
-    public void setState(int state,String id);
+    public void setState(String state,String id);
 
     public void setMore(String more,String id);
 
@@ -50,7 +65,7 @@ public interface JobSever {
 
     public String getSalary(String id);
 
-    public int getState(String id);
+    public String getState(String id);
 
     public String getMore(String id);
 

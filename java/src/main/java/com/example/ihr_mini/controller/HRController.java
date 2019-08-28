@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class HRController {
         return hrSeverImp.getHrs();
     }
     @RequestMapping("hrs")
-    public void geths(){
-        candidateMapper.setAcademic("软件工程学院","12345678");
+    public List<String> geths(){
+        return candidateMapper.getRegions();
     }
 }

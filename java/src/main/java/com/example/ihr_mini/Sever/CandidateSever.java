@@ -1,100 +1,139 @@
 package com.example.ihr_mini.Sever;
 
 import com.example.ihr_mini.Entity.Candidate;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface CandidateSever {
 
+    public List<Candidate> getByCondation(@Param("params") Map<Object,Object> params);
+
     public void addCandidate(String id,String mail,String pass);
 
-    public Candidate getById(String id);
+    public Candidate getCandidateById(String id);
 
     public List<Candidate> getCandidates();
 
-    public void setTime(String time,String id);
+    public List<String> getCandidateStates();
 
-    public void setJob(String job,String id);
+    public List<Integer> getCandidateAges();
 
-    public void setJob_region(String job_region,String id);
+    public List<String> getCandidateRegions();
 
-    public String getTime(String id);
+    public List<String> getCandidateMails();
 
-    public String getJob(String id);
+    public List<String> getCandidateNames();
 
-    public String getJob_region(String id);
+    public List<String> getCandidateEduBackGrounds();
 
-    public void setId(String id);
+    public List<String> getCandidateGraduates();
 
-    public void setMail(String mail,String id);
+    public List<String> getCandidateTimes();
 
-    public void setPass(String pass,String id);
+    public List<String> getCandidateJobs();
 
-    public void setName(String name,String id);
+    public List<String> getCandidateJobRegions();
 
-    public void setState(int state,String id);
+    public List<String> getCandidateJobIds();
 
-    public void setOperaterId(String operaterId,String id);
+    public void setCandidateTime(String time,String id);
 
-    public void setPhone(String phone,String id);
+    public void setCandidateJob(String job,String id);
 
-    public void setPicId(String picId,String id);
+    public void setCandidateJob_region(String job_region,String id);
 
-    public void setAge(int age,String id);
+    public String getCandidateTime(String id);
 
-    public void setBirthday(String birthday,String id);
+    public String getCandidateJob(String id);
 
-    public void setResumeId(String resumeId,String id);
+    public String getCandidateJob_region(String id);
 
-    public void setSchool(String school,String id);
+    public void setCandidateId(String id);
 
-    public void setMajor(String major,String id);
+    public String getCandidateGraduate(String id);
 
-    public void setAcademic(String academic,String id);
+    public void setCandidateGraduate(String graduate,String id);
 
-    public void setEduBackGround(String eduBackGround,String id);
+    public void setCandidateMail(String mail,String id);
 
-    public void setHometown(String hometown,String id);
+    public void setCandidatePass(String pass,String id);
 
-    public void setOwnTbId(String ownTbId,String id);
+    public void setCandidateName(String name,String id);
 
-    public void setJobId(String jobId,String id);
+    public void setCandidateState(String state,String id);
 
-    public String getJobId(String id);
+    public void setCandidateOperaterId(String operaterId,String id);
 
-    public String getId(String mail);
+    public void setCandidatePhone(String phone,String id);
 
-    public String getMail(String id);
+    public void setCandidatePicId(String picId,String id);
 
-    public String getPass(String id);
+    public void setCandidateAge(int age,String id);
 
-    public String getName(String id);
+    public void setCandidateBirthday(String birthday,String id);
 
-    public int getState(String id);
+    public void setCandidateResumeId(String resumeId,String id);
 
-    public String getOperaterId(String id);
+    public void setCandidateSchool(String school,String id);
 
-    public String getPhone(String id);
+    public void setCandidateMajor(String major,String id);
 
-    public String getPicId(String id);
+    public void setCandidateAcademic(String academic,String id);
 
-    public int getAge(String id);
+    public void setCandidateEduBackGround(String eduBackGround,String id);
 
-    public String getBirthday(String id);
+    public void setCandidateHometown(String hometown,String id);
 
-    public String getResumeId(String id);
+    public void setCandidateOwnTbId(String ownTbId,String id);
 
-    public String getSchool(String id);
+    public void setCandidateJobId(String jobId,String id);
 
-    public String getMajor(String id);
+    public void setEduBackGroundId(String eduBackGroundId,String id);
 
-    public String getAcademic(String id);
+    public String getEduBackGroundId(String id);
 
-    public String getEduBackGround(String id);
+    public String getCandidateJobId(String id);
 
-    public String getHometown(String id);
+    public int getCandidateSex(String id);
 
-    public String getOwnTbId(String id);
+    public void setCandidateSex(int sex,String id);
+
+    public String getCandidateId(String mail);
+
+    public String getCandidateMail(String id);
+
+    public String getCandidatePass(String id);
+
+    public String getCandidateName(String id);
+
+    public String getCandidateState(String id);
+
+    public String getCandidateOperaterId(String id);
+
+    public String getCandidatePhone(String id);
+
+    public String getCandidatePicId(String id);
+
+    public int getCandidateAge(String id);
+
+    public String getCandidateBirthday(String id);
+
+    public String getCandidateResumeId(String id);
+
+    public String getCandidateSchool(String id);
+
+    public String getCandidateMajor(String id);
+
+    public String getCandidateAcademic(String id);
+
+    public String getCandidateEduBackGround(String id);
+
+    public String getCandidateHometown(String id);
+
+    public String getCandidateOwnTbId(String id);
 }

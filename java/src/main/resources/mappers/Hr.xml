@@ -10,10 +10,25 @@
         <result property="email" column="c_mail" jdbcType="VARCHAR"/>
         <result property="state" column="c_state" jdbcType="INTEGER"/>
         <result property="job" column="c_job" jdbcType="VARCHAR"/>
+        <result property="picId" column="c_pic_id" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="getHrs" resultMap="hr">
         select * from t_hr_infor
     </select>
+    <select id="getById" resultMap="hr">
+        select * from t_hr_infor where c_id = #{id}
+    </select>
+
+    <select id="getNames" resultType="String">
+        select c_name from t_hr_infor
+    </select>
+    <select id="getIds" resultType="String">
+        select distinct c_id from t_hr_infor
+    </select>
+    <select id="getMails" resultType="String">
+        select c_mail from t_hr_infor
+    </select>
+
     <select id="getName" resultType="String">
         select c_name from t_hr_infor where c_id = #{id}
     </select>
@@ -29,10 +44,17 @@
     <select id="getPhone" resultType="String">
         select c_phone_number from t_hr_infor where c_id = #{id}
     </select>
-    <select id="getState" resultType="int">
+    <select id="getState" resultType="Integer">
         select c_state from t_hr_infor where c_id = #{id}
     </select>
     <select id="getJob" resultType="String">
         select c_job from t_hr_infor where c_id = #{id}
     </select>
+    <select id="getPicId" resultType="String">
+        select c_pic_id from t_hr_infor where c_id = #{id}
+    </select>
+
+    <update id="setPicId">
+        update t_hr_infor set c_pic_id = #{picId} where c_id = #{id}
+    </update>
 </mapper>

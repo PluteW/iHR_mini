@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ihr_mini.Mapper.CodeStateMapper">
+    <resultMap id="CodeState" type="com.example.ihr_mini.Entity.CodeState">
+        <id property="id" column="c_id" jdbcType="VARCHAR"/>
+        <result property="code" column="c_code" jdbcType="VARCHAR"/>
+        <result property="statement" column="c_statement" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getCodeStateCodes" resultType="String">
+        select c_code from t_codeStatement
+    </select>
+    <select id="getCodeStatementById" resultMap="CodeState">
+        select c_statement from t_codeStatement where c_id = #{id}
+    </select>
+    <select id="getCodeStatementByCode" resultType="String">
+        select c_statement from t_codeStatement where c_code = #{code}
+    </select>
+    <select id="getCodeStateIds" resultType="String">
+        select c_id from t_codeStatement
+    </select>
+    <select id="getStatementsByCode" resultType="String">
+        select c_statement from t_codeStatement where c_code = #{code}
+    </select>
+    <select id="getStatementById" resultType="String">
+        select c_statement from t_codeStatement where c_id = #{id}
+    </select>
+    <select id="getCodeById" resultType="String">
+        select c_code from t_codeStatement where c_id = #{id}
+    </select>
+    <select id="getCodeByStatement" resultType="String">
+        select c_code from t_codeStatement where c_statement = #{statement}
+    </select>
+    <select id="getIdByStatement" resultType="String">
+        select c_code from t_codeStatement where c_statement = #{statement}
+    </select>
+</mapper>

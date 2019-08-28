@@ -7,7 +7,16 @@ import java.util.List;
 
 @Mapper
 public interface HrMapper {
+
     public List<Hr> getHrs();
+
+    public Hr getById(String id);
+
+    public List<String> getNames();
+
+    public List<String> getIds();
+
+    public List<String> getMails();
 
     public String getName(String id);
 
@@ -22,4 +31,8 @@ public interface HrMapper {
     public int getState(String id);
 
     public String getJob(String id);
+
+    public String getPicId(String id);
+
+    public void setPicId(String picId,String id);
 }

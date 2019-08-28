@@ -23,6 +23,11 @@ public class LocationSeverImp implements Locationsever {
     }
 
     @Override
+    public List<String> getNames(){
+        return locationMapper.getNames();
+    }
+
+    @Override
     public String getId(String name) {
         return locationMapper.getId(name);
     }

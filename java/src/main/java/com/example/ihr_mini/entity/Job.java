@@ -7,13 +7,14 @@ public class Job {
 
     private String id; // 岗位代号
     private String name; // 岗位名称
+    private String category; // 岗位类别
     private String location; // 工作地点
     private String scheduleTime; // 到岗时间
     private int account; // 招聘目标人数
     private String timeBegin; // 招聘开始时间
     private String timeEnd; // 招聘结束时间
     private String salary; // 岗位薪水待遇 0面议
-    private int state; // 岗位状态码
+    private String state; // 岗位状态码
     private String more; // 关于工作的更多需求
     private int sex; // 性别 0女1男2不要求
 
@@ -49,7 +50,7 @@ public class Job {
         this.salary = salary;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -59,6 +60,14 @@ public class Job {
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public String getId() {
@@ -93,7 +102,7 @@ public class Job {
         return salary;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 

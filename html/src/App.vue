@@ -28,40 +28,34 @@ export default {
         id: '',
         pic: '',
         name: '',
-        state: 0
+        state: -1
       }
     }
   },
   created () { // 向后台请求用户数据
     const that = this
-    // this.request({
-    //   url: '/sysInfoFront/list', // 请求路径
-    //   method: 'get'
-    // }).then(function (res) {
-    //   const resData = res.data
-    //   if (resData.code === 100) {
-    //     const pic = resData.data.pic
-    //     resData.data.pic = pic
-    //     that.user = resData.data
-    //     //
-    //     that.user.pic = '/images/head_pic_unlog.png'
-    //   }
-    // })
-    if (localStorage.getItem('userdata') === '' || localStorage.getItem('userdata') === null) {
+    if (localStorage.getItem('userdata') === '' || localStorage.getItem('userdata') === null || localStorage.getItem('userdata') === undefined) {
       that.user.pic = 'static/images/head_pic_unlog.png'
       that.user.state = 0
+    } else {
+      let data = localStorage.getItem('userdata')
+      let userdata = JSON.parse(data)
+      that.user.pic = 'static/images/hr_pics/' + userdata.picId
+      that.user.id = userdata.id
+      that.user.name = userdata.name
+      that.user.state = userdata.state
     }
   },
   methods: {
     openMenue () {
       const that = this
-      if (that.user.state === 0) { // 状态码默认为0，未登录状态
+      if (that.user.state === -1) { // 状态码默认为-1，未登录状态
         ElementUI.Message({
           message: '暂未登录',
           type: 'error'
         })
-      } else if (that.user.state === 1) { // 状态码为1，账号正常，可转到我的页面
-        window.location.href = '/hello'
+      } else if (that.user.state === 0) { // 状态码为0，账号正常，可转到我的页面
+        window.location.href = '/hown'
       }
     }
   }

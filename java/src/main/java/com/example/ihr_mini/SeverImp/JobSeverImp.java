@@ -29,6 +29,37 @@ public class JobSeverImp  implements JobSever {
     }
 
     @Override
+    public List<String> getIds(){
+        return jobMapper.getIds();
+    }
+
+    @Override
+    public List<String> getCategorys(){
+        return jobMapper.getCategorys();
+    }
+
+    @Override
+    public List<String> getLocations(){
+        return jobMapper.getLocations();
+    }
+
+    @Override
+    public List<String> getScheduleTimes(){
+        return jobMapper.getScheduleTimes();
+    }
+
+    @Override
+    public List<String> getTimBegins(){
+        return jobMapper.getTimBegins();
+    }
+
+    @Override
+    public List<String> getTimeEnds(){
+        return jobMapper.getTimeEnds();
+    }
+
+
+    @Override
     public void setName(String name, String id) {
         return;
     }
@@ -64,7 +95,7 @@ public class JobSeverImp  implements JobSever {
     }
 
     @Override
-    public void setState(int state, String id) {
+    public void setState(String state, String id) {
         return;
     }
 
@@ -76,6 +107,16 @@ public class JobSeverImp  implements JobSever {
     @Override
     public void setSex(int sex, String id) {
         return;
+    }
+
+    @Override
+    public void setCategory(String category,String id){
+        return;
+    }
+
+    @Override
+    public String getCategory(String id){
+        return jobMapper.getCategory(id);
     }
 
     @Override
@@ -119,7 +160,7 @@ public class JobSeverImp  implements JobSever {
     }
 
     @Override
-    public int getState(String id) {
+    public String getState(String id) {
         return jobMapper.getState(id);
     }
 
