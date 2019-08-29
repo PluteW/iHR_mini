@@ -12,7 +12,15 @@
         <result property="job" column="c_job" jdbcType="VARCHAR"/>
         <result property="picId" column="c_pic_id" jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap id="listHr" type="com.example.ihr_mini.Entity.Hr">
+        <id property="id" column="c_id" jdbcType="VARCHAR"/>
+        <result property="name" column="c_name" jdbcType="VARCHAR"/>
+        <result property="job" column="c_job" jdbcType="VARCHAR"/>
+    </resultMap>
     <select id="getHrs" resultMap="hr">
+        select * from t_hr_infor
+    </select>
+    <select id="getPushHrList" resultMap="listHr">
         select * from t_hr_infor
     </select>
     <select id="getById" resultMap="hr">

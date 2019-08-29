@@ -32,7 +32,7 @@ export default {
       }
     }
   },
-  created () { // 向后台请求用户数据
+  mounted () { // 向后台请求用户数据
     const that = this
     if (localStorage.getItem('userdata') === '' || localStorage.getItem('userdata') === null || localStorage.getItem('userdata') === undefined) {
       that.user.pic = 'static/images/head_pic_unlog.png'

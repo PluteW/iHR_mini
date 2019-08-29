@@ -38,7 +38,11 @@ export default {
       errorMsg:""
     }
   },
+  beforeMount(){
+    localStorage.clear()
+  },
   mounted: function () {
+    localStorage.clear()
     let loadingInstance = Loading.service({
           text: '请稍等...',
           target: document.querySelector('.loadingtext')

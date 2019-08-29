@@ -7,8 +7,8 @@ import java.util.List;
 @Service
 public interface JobSever {
 
-    public void addJob(String name,String location,String ScheduleTime,String timeBegin,String timeEnd,int sex,int account, String salary, String more);
-
+    public void addJob(String name, String category ,String location,String ScheduleTime,String timeBegin,
+                       String timeEnd,int account, String salary, String state, String more);
     public List<Job> getJobs();
 
     public List<String> getIds();

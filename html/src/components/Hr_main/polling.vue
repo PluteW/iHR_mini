@@ -141,113 +141,13 @@ export default {
       resultTotal: 0, // 数据总数
       flagChecked: false, // 是否全选
       chileDhecked: false, // 用来控制子标签是否选中
-      region: ['山东', '北京', '上海', '广州'], // 应聘者来源
-      time: ['2019-8', '2019-9', '2019-7'], // 可供选择简历投递时间
-      jobRegin: ['IT开发工程师', '应用工程师', '业务经理', '营销经理'], // 可供选择岗位
-      status: ['待审核', '已审核', '流程中', '已锁定'], // 可供选择简历状态
-      age: ['19', '20', '21', '22', '23'], // 可供选择的年龄范围
-      eduBackGround: ['全选', '本科在读', '本科毕业', '研究生', '博士', '留学生'], // 可选择学历水平
-      tableData: [{ // 测试用数据
-        id: '123456',
-        name: '王小虎',
-        sex: 1,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduated: '2020'
-      }, {
-        id: '789098',
-        name: '王小虎',
-        sex: 2,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }, {
-        id: '373704',
-        name: '王小虎',
-        sex: 1,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: 2,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: 1,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: 1,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: 2,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: 1,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: 2,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: 1,
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBackGround: '本科',
-        graduate: '2020'
-      }]
+      region: [], // 应聘者来源
+      time: [], // 可供选择简历投递时间
+      jobRegin: [], // 可供选择岗位
+      status: [], // 可供选择简历状态
+      age: [], // 可供选择的年龄范围
+      eduBackGround: [], // 可选择学历水平
+      tableData: [] // 测试用数据
     }
   },
   mounted () {

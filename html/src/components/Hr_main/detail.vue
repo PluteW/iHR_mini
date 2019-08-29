@@ -8,10 +8,10 @@
                 <el-button key="4" v-if="!unlocked" @click="lock">解锁</el-button>
         </div>
         <div v-if="gotResumed">
-            <pdf :src='pdfUrl' style="height: 180%;  width: 85%" ></pdf>
+            <pdf :src='pdfUrl' style="height: 180%;  width: 85%;margin-left:7%" ></pdf>
         </div>
-        <div v-if="!gotResumed" style="margin-left:2%">
-            <img src="static/images/mideabear.jpg" width="80%" >
+        <div v-if="!gotResumed" style="margin-left:1%">
+            <img src="static/images/mideabear.jpg" width="98%" >
         </div>
         <el-dialog title="推送目标" :visible.sync="dialogVisible">
           <el-table align="center" style="width: 80%; margin:auto" border :data="tableData" @selection-change="handleSelectionChange" tooltip-effect="dark">
@@ -52,18 +52,10 @@ export default {
       employeeId: localStorage.getItem('employeeId'), // 应聘编号
       chooseType: 0, // 选择的操作类型
       unlocked: true, // 当前简历是否已经锁定
-      pdfUrl: 'static/190822.pdf', // 展示简历用的数据
+      pdfUrl: '', // 展示简历用的数据
       tableData: [{ // 测试用假数据，推送目标
         id: '123456',
         name: '蒋小刀',
-        job: '产品经理'
-      }, {
-        id: '345678',
-        name: '刘小川',
-        job: '项目经理'
-      }, {
-        id: '633566',
-        name: '王小天',
         job: '产品经理'
       }],
       multipleSelection: [], // 弹框列表中，选中行的人员id列表，默认未选中
@@ -109,7 +101,7 @@ export default {
       axios(
         {
           method: 'post',
-          url: 'ccs/', // 请求简历的地址
+          url: '/hr/detail', // 请求简历的地址
           data: {
             employeeId: _self.employeeId // 此时的应聘者的代号
           },
@@ -155,10 +147,10 @@ export default {
     },
     handleSend () {
       let _self = this
-      _self.handleChoose() // 处理提交
       for (let item in _self.multipleSelection) {
         _self.chooseId.push(_self.multipleSelection[item]['id'])
       }
+      _self.handleChoose() // 处理提交
       console.log(_self.chooseId)
       _self.dialogVisible = false // 选择框隐藏
     },
@@ -179,6 +171,9 @@ export default {
         text: '请稍等...',
         target: document.querySelector('.loadingtext')
       })
+      // 准备处理人员id的获取
+      let data = localStorage.getItem('userdata')
+      let userdata = JSON.parse(data)
       axios(
         {
           method: 'post',
@@ -186,8 +181,8 @@ export default {
           data: {
             chooseType: _self.chooseType, // 选项的代号
             employeeId: _self.employeeId, // 此时的应聘者的代号
-            // hrId: localStorage.getItem('userdata').id // 操作者id
-            chooseId: _self.chooseId // 保存提交目标的id
+            hrId: userdata.id, // 操作者id
+            chooseId: JSON.stringify(_self.chooseId) // 保存提交目标的id
           },
           transformRequest: [function (data) {
             var params = Qs.stringify(data, { arrayFormat: 'brackets' })

@@ -20,6 +20,11 @@ public class HrSeverImp implements HrSever {
     }
 
     @Override
+    public List<Hr> getPushHrList(){
+        return hrMapper.getPushHrList();
+    }
+
+    @Override
     public Hr getById(String id){
         return hrMapper.getById(id);
     }

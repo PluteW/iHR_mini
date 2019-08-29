@@ -13,8 +13,9 @@ public class JobSeverImp  implements JobSever {
     private JobMapper jobMapper;
 
     @Override
-    public void addJob(String name,String location,String ScheduleTime,String timeBegin,String timeEnd,int sex,int account, String salary, String more){
-        jobMapper.addJob(name, location, ScheduleTime, timeBegin, timeEnd, sex, account, salary, more);
+    public void addJob(String name, String category ,String location,String ScheduleTime,
+                       String timeBegin,String timeEnd,int account, String salary, String state, String more){
+        jobMapper.addJob(name,category, location, ScheduleTime, timeBegin, timeEnd, account, salary,state, more);
     }
 
 

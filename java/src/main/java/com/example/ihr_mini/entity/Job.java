@@ -16,7 +16,6 @@ public class Job {
     private String salary; // 岗位薪水待遇 0面议
     private String state; // 岗位状态码
     private String more; // 关于工作的更多需求
-    private int sex; // 性别 0女1男2不要求
 
     public void setId(String id) {
         this.id = id;
@@ -56,10 +55,6 @@ public class Job {
 
     public void setMore(String more) {
         this.more = more;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
     }
 
     public void setCategory(String category) {
@@ -110,7 +105,4 @@ public class Job {
         return more;
     }
 
-    public int getSex() {
-        return sex;
-    }
 }

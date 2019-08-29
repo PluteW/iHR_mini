@@ -10,6 +10,8 @@ public interface HrMapper {
 
     public List<Hr> getHrs();
 
+    public List<Hr> getPushHrList();
+
     public Hr getById(String id);
 
     public List<String> getNames();

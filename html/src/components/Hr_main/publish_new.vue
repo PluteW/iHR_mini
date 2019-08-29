@@ -17,7 +17,7 @@
               </el-col>
               <el-col :span="5">
                   <el-form-item label="入职时间：" label-width="100px" label-position = 'right'>
-                      <el-date-picker v-model="form.scheduleTime"  type="date"  placeholder="请选择入职时间" clearable> </el-date-picker>
+                      <el-date-picker v-model="form.scheduleTime" value-format="yyyy-MM-dd" type="date"  placeholder="请选择入职时间" clearable> </el-date-picker>
                   </el-form-item>
               </el-col>
           </el-row>
@@ -45,11 +45,11 @@
           <el-row style="margin-top: 20px">
               <el-col :span="6">
                   <el-form-item label-width="100px" label="有效时间：" label-position = 'right'>
-                    <el-date-picker v-model="form.timeBegin"  type="date"  placeholder="开始时间" clearable> </el-date-picker>
+                    <el-date-picker v-model="form.timeBegin" value-format="yyyy-MM-dd" type="date"  placeholder="开始时间" clearable> </el-date-picker>
                   </el-form-item>
               </el-col>
-              <el-col :span="6" label-width="80px">
-                    <el-date-picker v-model="form.timeEnd"  type="date"  placeholder="结束时间" clearable> </el-date-picker>
+              <el-col :span="6">
+                    <el-date-picker v-model="form.timeEnd" value-format="yyyy-MM-dd" type="date"  placeholder="结束时间" clearable> </el-date-picker>
               </el-col>
               <el-col :span="6" label-width="150px">
                   <el-form-item label="薪资待遇(月)：" label-position = 'right'>
@@ -94,10 +94,10 @@ export default {
         timeEnd: '', // 招聘结束时间
         salary: '' // 薪资待遇
       },
-      region: ['山东', '北京', '上海', '广州'], // 应聘者来源
-      salaryOption: ['面议', '3000以上', '6000以上', '9000以上', '12000以上'], // 薪资范围
-      jobCategray: ['开发岗', '管理岗', '技术岗', '人力岗', '财务岗'], // 岗位范围
-      eduBackGround: ['专科及以上', '本科及以上', '研究生及以上', '博士', '留学生'] // 学历选项
+      region: [], // 应聘者来源
+      salaryOption: [], // 薪资范围
+      jobCategray: [], // 岗位范围
+      eduBackGround: [] // 学历选项
     }
   },
   mounted () { // 表格选择项初始化
@@ -109,7 +109,7 @@ export default {
     axios(
       {
         method: 'post',
-        url: 'ccs/', // 请求数据地址
+        url: '/hr/addNew/init', // 请求数据地址
         data: {
           form: '' // 申请标志符
         },
@@ -150,12 +150,12 @@ export default {
       axios(
         {
           method: 'post',
-          url: 'ccs/', // 请求数据地址
+          url: '/hr/addNew/add', // 请求数据地址
           data: {
-            region: _self.region, // 可选择的工作地区
-            salaryOption: _self.salaryOption, // 可选择的薪资水平
-            jobCategray: _self.jobCategray, // 可选择的工作分类
-            eduBackGround: _self.eduBackGround, // 可选则的教育背景
+            region: JSON.stringify(_self.region), // 可选择的工作地区
+            salaryOption: JSON.stringify(_self.salaryOption), // 可选择的薪资水平
+            jobCategray: JSON.stringify(_self.jobCategray), // 可选择的工作分类
+            eduBackGround: JSON.stringify(_self.eduBackGround), // 可选则的教育背景
             form: _self.form // 保存了数据的对象
           },
           transformRequest: [function (data) {
@@ -166,13 +166,14 @@ export default {
           timeout: 15000
         }
       ).then(
-        function (res) { // 如果返回数据，则放到表格中
-          if (res.data) {
+        function (res) { // 判断是否成功发布
+          if (res) {
+            loadingInstance.close()
             Message({
               type: 'success',
               message: '发布成功！'
             })
-            loadingInstance.close()
+            this.reset()
           }
         }, function (response) { // 如果返回错误，则提错
           if (response) {
@@ -189,22 +190,21 @@ export default {
     onSubmit () { // 发布按钮，非提交
       console.log(this.form)
       this.handleSubmit()
-      this.reset()
     },
     reset () { // 重置按钮
       let loadingInstance = Loading.service({
         text: '请稍等...',
         target: document.querySelector('.loadingtext')
       })
-      this.name = '' // 职位
-      this.region = '' // 岗位工作地
-      this.scheduleTime = '' // 到岗时间
-      this.jobCategray = '' // 职务类别
-      this.eduBackGround = '' // 岗位学历要求
-      this.account = '' // 岗位人数上限
-      this.timeBegin = '' // 招聘开始时间
-      this.timeEnd = '' // 招聘结束时间
-      this.salary = '' // 薪资待遇
+      this.form.name = '' // 职位
+      this.form.region = '' // 岗位工作地
+      this.form.scheduleTime = '' // 到岗时间
+      this.form.jobCategray = '' // 职务类别
+      this.form.eduBackGround = '' // 岗位学历要求
+      this.form.account = '' // 岗位人数上限
+      this.form.timeBegin = '' // 招聘开始时间
+      this.form.timeEnd = '' // 招聘结束时间
+      this.form.salary = '' // 薪资待遇
       loadingInstance.close()
     }
   }

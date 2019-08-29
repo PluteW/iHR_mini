@@ -3,17 +3,16 @@
 <mapper namespace="com.example.ihr_mini.Mapper.JobMapper">
     <resultMap id="Job" type="com.example.ihr_mini.Entity.Job">
         <id property="id" column="c_id" jdbcType="VARCHAR"/>
+        <result property="name" column="c_name" jdbcType="VARCHAR"/>
+        <result property="category" column="c_category" jdbcType="VARCHAR"/>
         <result property="location" column="c_location" jdbcType="VARCHAR"/>
         <result property="scheduleTime" column="c_ScheduleTime" jdbcType="VARCHAR"/>
-        <result property="category" column="c_category" jdbcType="VARCHAR"/>
-        <result property="name" column="c_name" jdbcType="VARCHAR"/>
-        <result property="state" column="c_state" jdbcType="VARCHAR"/>
-        <result property="operator" column="c_operator" jdbcType="VARCHAR"/>
         <result property="account" column="c_account" jdbcType="INTEGER"/>
-        <result property="sex" column="c_sex" jdbcType="INTEGER"/>
         <result property="timeBegin" column="c_timeBegin" jdbcType="VARCHAR"/>
         <result property="timeEnd" column="c_timeEnd" jdbcType="VARCHAR"/>
         <result property="salary" column="c_salary" jdbcType="VARCHAR"/>
+        <result property="state" column="c_state" jdbcType="VARCHAR"/>
+        <result property="operator" column="c_operator" jdbcType="VARCHAR"/>
         <result property="more" column="c_more" jdbcType="VARCHAR"/>
 
     </resultMap>
@@ -76,9 +75,6 @@
     <select id="getMore" resultType="String">
         select c_more from t_jobs where c_id = #{id}
     </select>
-    <select id="getSex" resultType="Integer">
-        select c_sex from t_jobs where c_id = #{id}
-    </select>
     <select id="setCategory" resultType="String">
         select c_category from t_jobs where c_id = #{id}
     </select>
@@ -114,13 +110,10 @@
     <update id="setMore">
         update t_jobs set c_more = #{more} where c_id = #{id}
     </update>
-    <update id="setSex">
-        update t_jobs set c_sex = #{sex} where c_id = #{id}
-    </update>
 
     <insert id="addJob">
-        insert into t_jobs(c_name, c_location, c_scheduleTime, c_timeBegin, c_timeEnd, c_sex, c_account, c_salary, c_more)
-        values(#{name}, #{location}, #{ScheduleTime}, #{timeBegin}, #{timeEnd}, #{sex}, #{account}, #{salary}, #{more})
+        insert into t_jobs(c_name, c_category, c_location, c_scheduleTime, c_timeBegin, c_timeEnd, c_account, c_salary, c_state, c_more)
+        values(#{name},#{category}, #{location}, #{ScheduleTime}, #{timeBegin}, #{timeEnd}, #{account}, #{salary}, #{state}, #{more})
     </insert>
 
 </mapper>
