@@ -40,7 +40,7 @@ export default {
     } else {
       let data = localStorage.getItem('userdata')
       let userdata = JSON.parse(data)
-      that.user.pic = 'static/images/hr_pics/' + userdata.picId
+      that.user.pic = 'static/images/head_pic/' + userdata.picId
       that.user.id = userdata.id
       that.user.name = userdata.name
       that.user.state = userdata.state

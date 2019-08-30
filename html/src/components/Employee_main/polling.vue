@@ -17,7 +17,7 @@
                   </el-col>
                   <el-col :span="6">
                       <el-form-item label="入职时间：" label-width="100px" label-position = 'left'>
-                          <el-date-picker v-model="form.scheduleTime"  type="month"  placeholder="请选择入职时间" clearable> </el-date-picker>
+                          <el-date-picker v-model="form.scheduleTime"  value-format="yyyy-MM" type="month"  placeholder="请选择入职时间" clearable> </el-date-picker>
                       </el-form-item>
                   </el-col>
                   <el-col :span="5">
@@ -29,7 +29,7 @@
               <el-row style="margin-top: 15px">
                   <el-col :span="6" label-width="100px">
                       <el-form-item label="职位分类：" label-position = 'right'>
-                            <el-select v-model="form.age" placeholder="请选择职类" clearable>
+                            <el-select v-model="form.jobRegin" placeholder="请选择职类" clearable>
                               <el-option v-for="(item,index) in jobRegin" :key="index" :value="index" :label="item" ></el-option>
                           </el-select>
                       </el-form-item>
@@ -43,8 +43,8 @@
                   </el-col>
                   <el-col :span="6">
                       <el-form-item label="岗位状态：" label-width="100px" label-position = 'right'>
-                          <el-select v-model="form.status" placeholder="请选择岗位状态" clearable>
-                              <el-option v-for="(item,index) in status" :key="index" :value="index" :label="item" ></el-option>
+                          <el-select v-model="form.state" placeholder="请选择岗位状态" clearable>
+                              <el-option v-for="(item,index) in state" :key="index" :value="index" :label="item" ></el-option>
                           </el-select>
                       </el-form-item>
                   </el-col>
@@ -61,13 +61,13 @@
                     岗  位：{{item.name}}
                   </div>
                   <div class="location">
-                    工作地点：{{item.location}}
+                    工作地点：{{(item.location == null)?"待定":item.location}}
                   </div>
-                  <div class="status">
-                    岗位状态：{{item.status}}
+                  <div class="state">
+                    岗位状态：{{item.state}}
                   </div>
                   <div class="salary">
-                    薪资待遇：{{item.salary}}/月
+                    薪资待遇：{{(item.salary == null)?"面议":item.salary+"/月"}}
                   </div>
                 </div>
                 <div class="informationRight">
@@ -102,40 +102,16 @@ export default {
         scheduleTime: '', // 入职时间
         emailRemind: false, // 邮箱提醒，默认不提醒
         jobRegin: '', // 应聘岗位
-        status: '', // 简历状态
+        state: '', // 简历状态
         eduBackGround: '' // 学历选择项
       },
       chooseType: 0, // 选项代号 0初始化 1收藏 2删除 3详情
-      region: ['山东', '北京', '上海', '广州'], // 应聘者来源
-      time: ['2019-8', '2019-9', '2019-7'], // 可供选择简历投递时间
-      jobRegin: ['开发岗', '管理岗', '技术岗', '人力岗', '财务岗'], // 可供选择岗位职类
-      eduBackGround: ['专科及以上', '本科及以上', '研究生及以上', '博士', '留学生'], // 学历要求
-      status: ['申请中', '简历筛选', '面试', '岗位确定', '过期'], // 可供选择岗位状态
-      informationData: [{
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        status: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        status: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        status: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        status: '申请中'
-      }]
+      region: [], // 应聘者来源
+      time: [], // 可供选择简历投递时间
+      jobRegin: [], // 可供选择岗位职类
+      eduBackGround: [], // 学历要求
+      state: [], // 可供选择岗位状态
+      informationData: []
     }
   },
   mounted: function () {
@@ -148,7 +124,7 @@ export default {
     axios(
       {
         method: 'post',
-        url: 'ccs/', // 页面初始化，请求数据地址
+        url: '/employee/poilling/init', // 页面初始化，请求数据地址
         data: {
           form: '' // 空白表单用于全部查询
         },
@@ -162,11 +138,11 @@ export default {
     ).then(
       function (res) { // 如果返回数据，则放到展示中
         if (res.data) {
+          console.log(res)
           _self.informationData = res.data.informationData // 全部工作列表
           _self.region = res.data.region // 工作地区列表
-          _self.time = res.data.time // 到岗时间列表
           _self.eduBackGround = res.data.eduBackGround // 教育背景列表
-          _self.status = res.data.status // 岗位状态列表
+          _self.state = res.data.state // 岗位状态列表
           _self.jobRegin = res.data.jobRegin // 岗位类别列表
           Message({
             type: 'success',
@@ -196,15 +172,9 @@ export default {
       axios(
         {
           method: 'post',
-          url: 'ccs/', // 请求数据地址
+          url: '/employee/poilling/submit', // 请求数据地址
           data: {
-            form: _self.form, // 保存了数据的表单对象
-            chooseType: _self.chooseType, // 状态码
-            region: _self.region, // 工作地区列表
-            time: _self.time, // 到岗时间列表
-            eduBackGround: _self.eduBackGround, // 教育背景列表
-            status: _self.status, // 岗位状态列表
-            jobRegin: _self.jobRegin // 岗位类别列表
+            form: _self.form // 保存了数据的表单对象
           },
           transformRequest: [function (data) {
             var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -252,7 +222,7 @@ export default {
       _self.form.region = '' // 工作地点
       _self.form.time = '' // 应聘时间
       _self.form.jobRegin = '' // 应聘岗位
-      _self.form.status = '' // 岗位状态
+      _self.form.state = '' // 岗位状态
       _self.form.scheduleTime = '' // 入职时间
       _self.form.eduBackGround = '' // 学历选择项
       _self.form.emailRemind = false // 邮箱提醒，默认不提醒
@@ -316,7 +286,7 @@ export default {
   width:40%;
   float:left
 }
-.status{
+.state{
   color: cornflowerblue;
   font-size: 18px;
   margin-top:20px;

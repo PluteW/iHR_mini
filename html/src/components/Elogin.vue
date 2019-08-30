@@ -65,7 +65,11 @@ export default {
       passwordTwice: ""
     }
   },
+  beforeMount(){
+    localStorage.clear()
+  },
   mounted: function () {
+    localStorage.clear()
     let loadingInstance = Loading.service({
           text: '请稍等...',
           target: document.querySelector('.loadingtext')
@@ -106,9 +110,8 @@ export default {
         axios(
           {
             method: 'post',
-            url: 'Elogin',  // 接收登录消息的地址
+            url: '/employee/login/log',  // 接收登录消息的地址
             data: {
-              state: 1, // 状态码，1表示登录
               username: _self.usernameValue,
               password: _self.passwordValue
             },
@@ -121,15 +124,24 @@ export default {
           }
         ).then(
           function (res) {
-            if (res.data.result) {
+            console.log(res);
+            if (res.data.result === 2) { // 返回状态码2,表示登录成功
               loadingInstance.close();
               localStorage.setItem('userdata', JSON.stringify(res.data.userdata));
+              console.log(JSON.stringify(res.data.userdata))
               window.location.href = '/emain' // 跳转到主页面
-            } else {
-              this.reset
+            } else if (res.data.result === -1) { // 返回状态码-1,表示账号错误
+              _self.login_reset()
               Message({
-                type: 'warring',
-                message: '登录信息错误'
+                type: 'warning',
+                message: '账号错误'
+              })
+              loadingInstance.close();
+            } else if (res.data.result === 1) { // 返回状态码1,表示密码错误
+              _self.login_reset()
+              Message({
+                type: 'warning',
+                message: '密码错误'
               })
               loadingInstance.close();
             }
@@ -165,7 +177,6 @@ export default {
             method: 'post',
             url: 'register',  // 接收注册消息的地址
             data: {
-              state: 1, // 状态码，2表示注册
               username: _self.usernameValue,
               password: _self.passwordOnce
             },

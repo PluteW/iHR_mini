@@ -174,6 +174,12 @@ export default {
               message: '发布成功！'
             })
             this.reset()
+          } else {
+            loadingInstance.close()
+            Message({
+              type: 'error',
+              message: '发布失败！'
+            })
           }
         }, function (response) { // 如果返回错误，则提错
           if (response) {

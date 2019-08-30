@@ -9,8 +9,8 @@
             <div class="location">
               工作地点：{{item.location}}
             </div>
-            <div class="status">
-              岗位状态：{{item.status}}
+            <div class="state">
+              岗位状态：{{item.state}}
             </div>
             <div class="salary">
               薪资待遇：{{item.salary}}/月
@@ -40,25 +40,25 @@ export default {
         name: 'IT开发工程师',
         location: '广州',
         salary: '3000',
-        status: '申请中'
+        state: '申请中'
       }, {
         id: '1234234',
         name: 'IT开发工程师',
         location: '广州',
         salary: '3000',
-        status: '申请中'
+        state: '申请中'
       }, {
         id: '1234234',
         name: 'IT开发工程师',
         location: '广州',
         salary: '3000',
-        status: '申请中'
+        state: '申请中'
       }, {
         id: '1234234',
         name: 'IT开发工程师',
         location: '广州',
         salary: '3000',
-        status: '申请中'
+        state: '申请中'
       }]
     }
   },
@@ -72,9 +72,9 @@ export default {
     axios(
       {
         method: 'post',
-        url: 'ccs/', // 页面初始化，请求数据地址
+        url: '/emloyee/myjobs/init', // 页面初始化，请求数据地址
         data: {
-          // employeeId: localStorage.getItem('userdata').id // 用户的id
+          employeeId: JSON.parse(localStorage.getItem('userdata')).id // 用户的id
         },
         transformRequest: [function (data) {
           var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -154,7 +154,7 @@ export default {
   width:40%;
   float:left
 }
-.status{
+.state{
   color: cornflowerblue;
   font-size: 18px;
   margin-top:20px;
