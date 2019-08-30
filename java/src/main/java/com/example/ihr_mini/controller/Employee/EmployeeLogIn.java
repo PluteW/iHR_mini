@@ -23,5 +23,9 @@ public class EmployeeLogIn {
     }
 
     //Employee页面注册
-    
+    @PostMapping(path = "/employee/login/register")
+    public Map register(@RequestParam Map data){
+        return employeeLogSeverImp.register(data);
+    }
+
 }

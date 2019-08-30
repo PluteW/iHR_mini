@@ -244,46 +244,49 @@ public class EmployeeMainSeverImp {
     //根据岗位的ID返回详细信息
     public Job getJobById(String jobID){
         Job job = jobMapper.getById(jobID);
-        //代号转文本
-        job.setState(codeStateMapper.getStatementById(job.getState()));  // 状态
-        job.setCategory(codeStateMapper.getStatementById(job.getCategory())); // 岗位类别
-        job.setEduBackGround(codeStateMapper.getStatementById(job.getEduBackGround())); // 教育背景
-        job.setLocation(codeStateMapper.getStatementById(job.getLocation())); // 工作地点
-        job.setSalary(codeStateMapper.getStatementById(job.getSalary())); // 薪资待遇
+        if(job != null){
+            //代号转文本
+            job.setState(codeStateMapper.getStatementById(job.getState()));  // 状态
+            job.setCategory(codeStateMapper.getStatementById(job.getCategory())); // 岗位类别
+            job.setEduBackGround(codeStateMapper.getStatementById(job.getEduBackGround())); // 教育背景
+            job.setLocation(codeStateMapper.getStatementById(job.getLocation())); // 工作地点
+            job.setSalary(codeStateMapper.getStatementById(job.getSalary())); // 薪资待遇
 
-        String timeBegin = job.getTimeBegin();
-        String timeEnd = job.getTimeEnd();
-        String scheduleTime =job.getScheduleTime();
-        //月份格式转换
-        Date date = null;
-        String d = "";
-        SimpleDateFormat sdfDB = new SimpleDateFormat("yyyyMMdd");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
-        //三个日期格式的转换
-        try {
-            if(timeBegin.equals("0")){
-                job.setTimeBegin("即日起");
-            } else {
-                date = sdfDB.parse(timeBegin);
-                d = sdf.format(date);
-                job.setTimeBegin(d);
+            String timeBegin = job.getTimeBegin();
+            String timeEnd = job.getTimeEnd();
+            String scheduleTime =job.getScheduleTime();
+            //月份格式转换
+            Date date = null;
+            String d = "";
+            SimpleDateFormat sdfDB = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+            //三个日期格式的转换
+            try {
+                if(timeBegin.equals("0")){
+                    job.setTimeBegin("即日起");
+                } else {
+                    date = sdfDB.parse(timeBegin);
+                    d = sdf.format(date);
+                    job.setTimeBegin(d);
+                }
+                if(timeEnd.equals("0")){
+                    job.setTimeEnd("长期");
+                }else {
+                    date = sdfDB.parse(timeEnd);
+                    d = sdf.format(date);
+                    job.setTimeEnd(d);
+                }
+                if(scheduleTime.equals("0")){
+                    job.setScheduleTime("尽早到岗");
+                }else {
+                    date = sdfDB.parse(scheduleTime);
+                    d = sdf.format(date);
+                    job.setScheduleTime(d);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-            if(timeEnd.equals("0")){
-                job.setTimeEnd("长期");
-            }else {
-                date = sdfDB.parse(timeEnd);
-                d = sdf.format(date);
-                job.setTimeEnd(d);
-            }
-            if(scheduleTime.equals("0")){
-                job.setScheduleTime("尽早到岗");
-            }else {
-                date = sdfDB.parse(scheduleTime);
-                d = sdf.format(date);
-                job.setScheduleTime(d);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+
         }
 
         return job;

@@ -22,6 +22,11 @@
           </div>
         </div>
       </div>
+      <div>
+        <div v-if="noData">
+            <img src="static/images/mideabear.jpg"  height="100%" width="100%" >
+        </div>
+      </div>
     </div>
 </template>
 
@@ -35,31 +40,8 @@ export default {
   props: ['cotent'],
   data () {
     return {
-      informationData: [{
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        state: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        state: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        state: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        state: '申请中'
-      }]
+      informationData: [],
+      noData: true
     }
   },
   mounted: function () {
@@ -87,6 +69,11 @@ export default {
       function (res) { // 如果返回数据，则放到展示中
         if (res.data) {
           _self.informationData = res.data.informationData
+          if (_self.informationData.length === 0) {
+            noData = false
+          }else{
+            noData = true
+          }
           Message({
             type: 'success',
             message: '查询成功'

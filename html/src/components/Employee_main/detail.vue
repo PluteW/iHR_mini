@@ -72,7 +72,6 @@ export default {
     // 向后台请求岗位信息
     if (_self.jobId !== '' && _self.jobId !== null) { // 如果选中的jobId不为空，则向后台请求简历数据
       if (_self.gitinfor()) { // 尝试请求岗位信息
-        _self.gotinfored = true
         Message({
           type: 'success',
           message: '数据获取成功！'
@@ -112,6 +111,11 @@ export default {
         function (res) { // 如果返回数据，则放到表格中
           if (res.data) {
             _self.jobData = res.data.jobData // 获取工作数据地址
+            if (_self.jobData === null) {
+              _self.gotinfored = false
+            } else {
+              _self.gotinfored = true
+            }
             return true
           }
         }, function (response) { // 如果返回错误，则报错

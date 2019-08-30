@@ -17,7 +17,7 @@ public interface CandidateMapper {
 
     public List<String> getJobIdsByEmail(String email);
 
-    public void addCandidate(String id,String mail,String pass);
+    public void addCandidate(String mail,String pass);
 
     public Candidate getById(String id);
 
