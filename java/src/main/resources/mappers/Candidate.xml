@@ -224,7 +224,7 @@
     </update>
 
     <insert id="addCandidate">
-        insert into t_candidate_infor(id, mail, pass) values(#{id},#{mail}, #{pass})
+        insert into t_candidate_infor(mail, pass) values(#{mail}, #{pass})
     </insert>
 
 </mapper>

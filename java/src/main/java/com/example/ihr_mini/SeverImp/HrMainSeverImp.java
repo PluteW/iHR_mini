@@ -6,10 +6,8 @@ import com.example.ihr_mini.Mapper.CandidateMapper;
 import com.example.ihr_mini.Mapper.CodeStateMapper;
 import com.example.ihr_mini.Mapper.HrMapper;
 import com.example.ihr_mini.Mapper.JobMapper;
-import com.example.ihr_mini.Sever.CandidateSever;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
