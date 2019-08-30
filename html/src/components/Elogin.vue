@@ -6,7 +6,7 @@
           <el-tab-pane label="登 录" name="login" class="labels"></el-tab-pane>
             <div v-if="label_login">
               <div class="form_login_title">
-                <a>账 号：</a>
+                <a>邮  箱：</a>
                 <a><input id = "username" type="text" v-model="usernameValue"></a>
               </div>
               <div class="form_login_title">
@@ -22,7 +22,7 @@
           <el-tab-pane label="注 册" name="register" class="labels"></el-tab-pane>
           <div v-if="lable_register">
               <div class="form_register_title">
-                <a>账 号：</a>
+                <a>邮  箱：</a>
                 <a><input id = "username" type="text" v-model="usernameValue"></a>
               </div>
               <div class="form_register_title">
@@ -175,7 +175,7 @@ export default {
         axios(
           {
             method: 'post',
-            url: 'register',  // 接收注册消息的地址
+            url: '/employee/login/register',  // 接收注册消息的地址
             data: {
               username: _self.usernameValue,
               password: _self.passwordOnce
@@ -191,8 +191,9 @@ export default {
           function (res) {
             if (res.data) {
               loadingInstance.close();
-              localStorage.setItem('userdata', res.data);
-              window.location.href = '/Emain' // 跳转到主页面
+              localStorage.setItem('userdata', JSON.stringify(res.data.userdata));
+              console.log(JSON.stringify(res.data.userdata))
+              window.location.href = '/emain' // 跳转到主页面
             }
           }, function (response) { // 如果返回错误，则提错
             if (response) {
