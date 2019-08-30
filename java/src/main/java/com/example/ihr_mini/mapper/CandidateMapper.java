@@ -13,6 +13,10 @@ public interface CandidateMapper {
 
     public List<Candidate> getByCondation(@Param("params") Map<Object,Object> params);
 
+    public Candidate getOneByMail(String mail);
+
+    public List<String> getJobIdsByEmail(String email);
+
     public void addCandidate(String id,String mail,String pass);
 
     public Candidate getById(String id);

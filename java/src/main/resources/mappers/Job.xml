@@ -6,6 +6,7 @@
         <result property="name" column="c_name" jdbcType="VARCHAR"/>
         <result property="category" column="c_category" jdbcType="VARCHAR"/>
         <result property="location" column="c_location" jdbcType="VARCHAR"/>
+        <result property="eduBackGround" column="c_eduBackGround" jdbcType="VARCHAR"/>
         <result property="scheduleTime" column="c_ScheduleTime" jdbcType="VARCHAR"/>
         <result property="account" column="c_account" jdbcType="INTEGER"/>
         <result property="timeBegin" column="c_timeBegin" jdbcType="VARCHAR"/>
@@ -16,23 +17,40 @@
         <result property="more" column="c_more" jdbcType="VARCHAR"/>
 
     </resultMap>
-    <select id="getJobs" resultMap="Job">
+
+    <select id="getByCondation" parameterType="map" resultMap="Job">
         select * from t_jobs
+        <where>
+            <foreach collection="params.keys" item="item" separator="and">
+                <if test="params[item] !=  '-1'.toString() and params[item] != '' and params[item] != null">
+                    ${item} like "${params[item]}%"
+                </if>
+            </foreach>
+        </where>
     </select>
 
-    <select id="getById" resultType="com.example.ihr_mini.Entity.Job">
+
+    <select id="getJobs" resultMap="Job">
+        select * from t_jobs limit 15
+    </select>
+
+    <select id="getById" resultMap="Job">
         select * from t_jobs where c_id = #{id}
     </select>
-
-
     <select id="getIds" resultType="String">
-        select c_id distinct from t_jobs
+        select distinct c_id  from t_jobs
     </select>
     <select id="getCategorys" resultType="String">
         select distinct c_category from t_jobs
     </select>
     <select id="getLocations" resultType="String">
         select distinct c_location from t_jobs
+    </select>
+    <select id="geteduBackGrounds" resultType="String">
+        select distinct c_eduBackGround from t_jobs
+    </select>
+    <select id="getstates" resultType="String">
+        select distinct c_state from t_jobs
     </select>
     <select id="getScheduleTimes" resultType="String">
         select distinct c_ScheduleTime from t_jobs

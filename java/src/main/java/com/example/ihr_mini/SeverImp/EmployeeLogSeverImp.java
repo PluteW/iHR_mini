@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class EmployeeMainSeverImp {
+public class EmployeeLogSeverImp {
 
     @Autowired
     private CandidateMapper candidateMapper;

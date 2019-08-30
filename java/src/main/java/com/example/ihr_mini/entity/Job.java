@@ -9,6 +9,7 @@ public class Job {
     private String name; // 岗位名称
     private String category; // 岗位类别
     private String location; // 工作地点
+    private String eduBackGround; // 教育背景ID
     private String scheduleTime; // 到岗时间
     private int account; // 招聘目标人数
     private String timeBegin; // 招聘开始时间
@@ -61,9 +62,17 @@ public class Job {
         this.category = category;
     }
 
+    public void setEduBackGround(String eduBackGround) {
+        this.eduBackGround = eduBackGround;
+    }
+    public String getEduBackGround() {
+        return eduBackGround;
+    }
+
     public String getCategory() {
         return category;
     }
+
 
     public String getId() {
         return id;

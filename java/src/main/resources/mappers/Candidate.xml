@@ -38,8 +38,14 @@
             </foreach>
         </where>
     </select>
+    <select id="getJobIdsByEmail" resultType="String">
+        select c_jobId from t_candidate_infor where c_mail = #{email}
+    </select>
     <select id="getCandidates" resultMap="candidate">
         select * from t_candidate_infor
+    </select>
+    <select id="getOneByMail" resultMap="candidate">
+        select distinct * from t_candidate_infor where c_mail = #{mail}
     </select>
     <select id="getById" resultType="com.example.ihr_mini.Entity.Candidate">
         select * from t_candidate_infor where c_id = #{id}

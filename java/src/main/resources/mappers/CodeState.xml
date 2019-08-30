@@ -11,6 +11,9 @@
     <select id="getCodeStateCodes" resultType="String">
         select c_code from t_codeStatement
     </select>
+    <select id="getOrder" resultType="String">
+        select distinct c_order from t_codeStatement where c_id = #{param} or c_code = #{param} or c_statement = #{param}
+    </select>
     <select id="getCodeStatementById" resultMap="CodeState">
         select c_statement from t_codeStatement where c_id = #{id}
     </select>
@@ -33,6 +36,6 @@
         select c_code from t_codeStatement where c_statement = #{statement}
     </select>
     <select id="getIdByStatement" resultType="String">
-        select c_code from t_codeStatement where c_statement = #{statement}
+        select c_id from t_codeStatement where c_statement = #{statement}
     </select>
 </mapper>

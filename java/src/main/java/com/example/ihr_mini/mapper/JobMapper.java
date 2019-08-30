@@ -3,11 +3,15 @@ package com.example.ihr_mini.Mapper;
 import com.example.ihr_mini.Entity.Job;
 import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface JobMapper {
+
+    public List<Job> getByCondation(@Param("params") Map<Object,Object> params);
 
     public void addJob(String name, String category ,String location,String ScheduleTime,String timeBegin,
                        String timeEnd,int account, String salary, String state, String more);
@@ -21,6 +25,10 @@ public interface JobMapper {
     public List<String> getCategorys();
 
     public List<String> getLocations();
+
+    public List<String> geteduBackGrounds();
+
+    public List<String> getstates();
 
     public List<String> getScheduleTimes();
 
@@ -49,6 +57,10 @@ public interface JobMapper {
     public void setSex(int sex,String id);
 
     public void setCategory(String category,String id);
+
+    public void setEduBackGround(String eduBackGround,String id);
+
+    public String getEduBackGround(String id);
 
     public String getCategory(String id);
 

@@ -45,6 +45,16 @@ public class JobSeverImp  implements JobSever {
     }
 
     @Override
+    public List<String> geteduBackGrounds(){
+        return jobMapper.geteduBackGrounds();
+    }
+
+    @Override
+    public List<String> getstates(){
+        return jobMapper.getstates();
+    }
+
+    @Override
     public List<String> getScheduleTimes(){
         return jobMapper.getScheduleTimes();
     }

@@ -25,4 +25,6 @@ public interface CodeStateMapper {
     public String getCodeByStatement(String statement);
 
     public String getIdByStatement(String statement);
+
+    public String getOrder(String param);
 }
