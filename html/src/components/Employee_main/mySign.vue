@@ -9,8 +9,8 @@
             <div class="location">
               工作地点：{{item.location}}
             </div>
-            <div class="status">
-              岗位状态：{{item.status}}
+            <div class="state">
+              岗位状态：{{item.state}}
             </div>
             <div class="salary">
               薪资待遇：{{item.salary}}/月
@@ -20,6 +20,11 @@
             <el-button type="primary" v-bind="item" style="margin-left: 17%;margin-top: 17%"
             @click="detail(item)">详情</el-button>
           </div>
+        </div>
+      </div>
+      <div>
+        <div v-if="noData">
+            <img src="static/images/mideabear.jpg"  height="100%" width="100%" >
         </div>
       </div>
     </div>
@@ -35,31 +40,8 @@ export default {
   props: ['cotent'],
   data () {
     return {
-      informationData: [{
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        status: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        status: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        status: '申请中'
-      }, {
-        id: '1234234',
-        name: 'IT开发工程师',
-        location: '广州',
-        salary: '3000',
-        status: '申请中'
-      }]
+      informationData: [],
+      noData: true
     }
   },
   mounted: function () {
@@ -72,9 +54,9 @@ export default {
     axios(
       {
         method: 'post',
-        url: 'ccs/', // 页面初始化，请求数据地址
+        url: '/emloyee/myjobs/init', // 页面初始化，请求数据地址
         data: {
-          // employeeId: localStorage.getItem('userdata').id // 用户的id
+          employeeId: JSON.parse(localStorage.getItem('userdata')).id // 用户的id
         },
         transformRequest: [function (data) {
           var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -87,6 +69,11 @@ export default {
       function (res) { // 如果返回数据，则放到展示中
         if (res.data) {
           _self.informationData = res.data.informationData
+          if (_self.informationData.length === 0) {
+            _self.noData = true
+          } else {
+            _self.noData = false
+          }
           Message({
             type: 'success',
             message: '查询成功'
@@ -154,7 +141,7 @@ export default {
   width:40%;
   float:left
 }
-.status{
+.state{
   color: cornflowerblue;
   font-size: 18px;
   margin-top:20px;

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ihr_mini.Mapper.RecumeMapper">
+    <resultMap id="resume" type="com.example.ihr_mini.Entity.Recume">
+        <id property="id" column="c_id" jdbcType="VARCHAR"/>
+        <result property="graduate" column="c_graduate" jdbcType="VARCHAR"/>
+        <result property="school" column="c_school" jdbcType="VARCHAR"/>
+        <result property="name" column="c_name" jdbcType="VARCHAR"/>
+        <result property="state" column="c_state" jdbcType="INTEGER"/>
+        <result property="operator" column="c_operator" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getResumes" resultMap="resume">
+        select * from t_resume
+    </select>
+
+    <select id="getById" resultType="com.example.ihr_mini.Entity.Recume">
+        select * from t_resume where c_id = #{id}
+    </select>
+
+    <select id="getGraduates" resultMap="resume">
+        select distinct c_graduate from t_resume
+    </select>
+
+    <select id="getId" resultType="String">
+        select c_id from t_resume where c_name = #{name}
+    </select>
+    <select id="getName" resultType="String">
+        select c_name from t_resume where c_id = #{id}
+    </select>
+    <select id="getGraduate" resultType="String">
+        select c_graduate from t_resume where c_id = #{id}
+    </select>
+    <select id="getJob_region" resultType="String">
+        select c_job_region from t_resume where c_id = #{id}
+    </select>
+    <select id="getSchool" resultType="String">
+        select c_school from t_resume where c_mail = #{mail}
+    </select>
+    <select id="getOperator" resultType="String">
+        select c_operator from t_resume where c_id = #{id}
+    </select>
+
+
+    <update id="setName">
+        update t_resume set c_name = #{name} where c_id = #{id}
+    </update>
+    <update id="setGraduate">
+        update t_resume set c_graduate = #{graduate} where c_id = #{id}
+    </update>
+    <update id="setSchool">
+        update t_resume set c_school = #{school} where c_id = #{id}
+    </update>
+    <update id="setState">
+        update t_resume set c_state = #{state} where c_id = #{id}
+    </update>
+    <update id="setOperator">
+        update t_resume set c_operator = #{operator} where c_id = #{id}
+    </update>
+
+    <insert id="addRecume">
+        insert into t_resume(c_id,c_name,c_graduate,c_school) values(#{id},#{name}, #{graduate},#{school})
+    </insert>
+
+</mapper>

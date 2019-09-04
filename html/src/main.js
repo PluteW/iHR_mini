@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueBus from 'vue-bus'
+
+import axios from 'axios'
+
 import {
   Table,
   Tooltip,
@@ -106,6 +109,10 @@ Vue.prototype.$alert = MessageBox.alert
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.baseURL = process.env.API_URL
 Vue.prototype.$notify = Notification
+
+axios.defaults.baseURL = 'http://localhost:8080'
+Vue.config.productionTip = false
+Vue.prototype.$addr = axios
 
 Vue.use(VueBus)
 /* eslint-disable no-new */

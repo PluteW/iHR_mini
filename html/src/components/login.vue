@@ -38,15 +38,19 @@ export default {
       errorMsg:""
     }
   },
+  beforeMount(){
+    localStorage.clear()
+  },
   mounted: function () {
+    localStorage.clear()
     let loadingInstance = Loading.service({
           text: '请稍等...',
           target: document.querySelector('.loadingtext')
         });
     let userdata = localStorage.getItem('userdata')
     if (userdata !== '' && userdata !== undefined && userdata !== null){
-      if (userdata.state === 1){
-        window.location.href = '/emain'
+      if (userdata.state === 0){
+        window.location.href = '/hmain'
       } else {
         loadingInstance.close()
       }
@@ -56,6 +60,7 @@ export default {
   },
   methods: {
     login () {
+      localStorage.clear()
       const _self = this;
       if (_self.usernameValue == "" || _self.passwordValue == "") { // 账号和密码任一个为空，报错
         _self.errorMsg = 'Please input valid username and password'
@@ -68,10 +73,10 @@ export default {
       axios(
         {
           method: 'post',
-          url: 'ccs/',
+          url: 'hr/login',
           data: {
-              username: _self.usernameValue,
-              password: _self.passwordValue
+            username: _self.usernameValue,
+            password: _self.passwordValue
           },
           transformRequest: [function (data) {
           var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -82,14 +87,24 @@ export default {
         }
       ).then(
         function (res) {
+          console.log(res)
           if (res.data.result) {
+            if(res.data.userdata.state === 1){
+              _self.reset()
               loadingInstance.close();
-              localStorage.setItem('userdata', res.data.userdata);
+               Message({
+              type: 'error',
+              message: '账户状态受限'
+            })
+            } else {
+              loadingInstance.close();
+              localStorage.setItem('userdata', JSON.stringify(res.data.userdata))
               window.location.href = '/hmain' // 跳转到主页面
+            }
           } else {
-            this.reset
+            _self.reset()
             Message({
-              type: 'warring',
+              type: 'error',
               message: '登录信息错误'
             })
             loadingInstance.close();

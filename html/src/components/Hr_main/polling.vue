@@ -11,8 +11,8 @@
                     <el-col :span="6">
                         <el-form-item label="性别：" label-width="90px" label-position = 'right'>
                             <el-select v-model="form.sex" placeholder="请选择性别" clearable>
-                                <el-option key="0" label="女" :value="0"></el-option>
-                                <el-option key="1" label="男" :value="1"></el-option>
+                                <el-option key="1" label="女" :value="1"></el-option>
+                                <el-option key="2" label="男" :value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -34,14 +34,9 @@
                     </el-col>
                     <el-col :span="15">
                         <el-form-item label="学历水平：" label-position = 'right'>
-                            <el-checkbox-group v-model="form.eduBackGround">
-                                <el-checkbox label="全选" key = '0' :flagChecked="flagChecked" value = '0' @change="handleCheck"></el-checkbox>
-                                <el-checkbox id="checkbox_1" label="本科在读"  key = '1' value = '1'></el-checkbox>
-                                <el-checkbox id="checkbox_2" label="本科毕业" key = '2' value = '2'></el-checkbox>
-                                <el-checkbox id="checkbox_3" label="研究生"  key = '3' value = '3'></el-checkbox>
-                                <el-checkbox id="checkbox_4" label="博士"  key = '4' value = '4'></el-checkbox>
-                                <el-checkbox id="checkbox_5" label="留学生" key = '5' value = '5'></el-checkbox>
-                            </el-checkbox-group>
+                          <el-select v-model="form.eduBackGround" placeholder="请选择学历水平" clearable>
+                              <el-option v-for="(item,index) in eduBackGround" :key="index"  :value="index" :label="item" ></el-option>
+                          </el-select>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -84,7 +79,7 @@
                     <template slot-scope="scope" align="center">{{ scope.row.name }}</template>
                 </el-table-column>
                 <el-table-column label="性别" width="60" align="center">
-                    <template slot-scope="scope" align="center">{{ scope.row.sex }}</template>
+                    <template slot-scope="scope" align="center">{{ (scope.row.sex === 1)?"女":"男" }}</template>
                 </el-table-column>
                 <el-table-column label="年龄" width="60" align="center">
                     <template slot-scope="scope" align="center">{{ scope.row.age }}</template>
@@ -99,10 +94,10 @@
                     <template slot-scope="scope" align="center">{{ scope.row.major }}</template>
                 </el-table-column>
                 <el-table-column label="学历" align="center">
-                    <template slot-scope="scope" align="center">{{ scope.row.eduBack }}</template>
+                    <template slot-scope="scope" align="center">{{ scope.row.eduBackGround }}</template>
                 </el-table-column>
                 <el-table-column label="毕业时间" width="100" align="center">
-                    <template slot-scope="scope" align="center">{{ scope.row.graduatedYear }}</template>
+                    <template slot-scope="scope" align="center">{{ scope.row.graduate }}</template>
                 </el-table-column>
                  <el-table-column prop="handle" label="操作" fixed="right" :show-overflow-tooltip="true" align="center" width="52">
                     <el-button type="text" aria-label="查看" style="min-width:auto" size="mini">查看</el-button>
@@ -122,7 +117,6 @@ import { Loading, Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import Qs from 'qs'
-const eduBackGroundOptions = ['全选', '本科在读', '本科毕业', '研究生', '博士', '留学生']
 // let loadingInstance = Loading.service({
 //   text: '请稍等...',
 //   target: document.querySelector('.loadingtext')
@@ -147,112 +141,13 @@ export default {
       resultTotal: 0, // 数据总数
       flagChecked: false, // 是否全选
       chileDhecked: false, // 用来控制子标签是否选中
-      region: ['山东', '北京', '上海', '广州'], // 应聘者来源
-      time: ['2019-8', '2019-9', '2019-7'], // 可供选择简历投递时间
-      jobRegin: ['IT开发工程师', '应用工程师', '业务经理', '营销经理'], // 可供选择岗位
-      status: ['待审核', '已审核', '流程中', '已锁定'], // 可供选择简历状态
-      age: ['19', '20', '21', '22', '23'], // 可供选择的年龄范围
-      tableData: [{ // 测试用数据
-        id: '123456',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '789098',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '373704',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }, {
-        id: '037595',
-        name: '王小虎',
-        sex: '男',
-        age: '24',
-        job: 'IT开发工程师',
-        school: '湖南大学',
-        major: '化学',
-        eduBack: '本科',
-        graduatedYear: '2020'
-      }]
+      region: [], // 应聘者来源
+      time: [], // 可供选择简历投递时间
+      jobRegin: [], // 可供选择岗位
+      status: [], // 可供选择简历状态
+      age: [], // 可供选择的年龄范围
+      eduBackGround: [], // 可选择学历水平
+      tableData: [] // 测试用数据
     }
   },
   mounted () {
@@ -264,7 +159,7 @@ export default {
     axios(
       {
         method: 'post',
-        url: 'ccs/', // 请求数据地址
+        url: '/hr/poilling/init', // 请求数据地址
         data: {
           form: '' // 空表单提交，请求原始选项数据
         },
@@ -281,8 +176,9 @@ export default {
           _self.region = res.data.region // 应聘者来源
           _self.time = res.data.time // 可供选择简历投递时间
           _self.jobRegin = res.data.jobRegin // 可供选择岗位
-          _self.status = res.data.status // 可供选择简历状态
+          _self.status = res.data.state // 可供选择简历状态
           _self.age = res.data.age // 可供选择的年龄范围
+          _self.eduBackGround = res.data.eduBackGround
           Message({
             type: 'success',
             message: '选项更新成功'
@@ -306,14 +202,6 @@ export default {
       this.multipleSelection = val
       console.log(this.multipleSelection)
     },
-    handleCheck (val) {
-      if (this.flagChecked) {
-        this.form.eduBackGround = []
-      } else {
-        this.form.eduBackGround = eduBackGroundOptions
-      }
-      this.flagChecked = !this.flagChecked
-    },
     handleView (row) {
       console.log(row.id)
       this.$bus.emit('employeeId', row.id)
@@ -333,16 +221,10 @@ export default {
       axios(
         {
           method: 'post',
-          url: 'ccs/', // 请求数据地址
+          url: '/hr/poilling/submit', // 请求数据地址
           data: {
             form: _self.form, // 保存了数据的对象
-            pageIndex: _self.pageIndex, // 当前页码
-            region: _self.region, // 应聘者来源
-            time: _self.time, // 可供选择简历投递时间
-            jobRegin: _self.jobRegin, // 可供选择岗位
-            status: _self.status, // 可供选择简历状态
-            age: _self.age, // 可供选择的年龄范围
-            eduBackGroundOptions: _self.eduBackGroundOptions // 教育背景选择列表
+            pageIndex: _self.pageIndex // 当前页码
           },
           transformRequest: [function (data) {
             var params = Qs.stringify(data, { arrayFormat: 'brackets' })
@@ -373,6 +255,7 @@ export default {
         }
       )
       loadingInstance.close()
+      console.log(_self.eduBackGround)
     },
     onSubmit () {
       console.log(this.form)

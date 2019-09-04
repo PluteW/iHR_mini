@@ -20,19 +20,19 @@
                 工作地点：
               </div>
               <div class="location">
-                {{jobData.location}}
+                {{(jobData.location == null)?"待定":jobData.location}}
               </div>
               <div class="statusTitle">
                 岗位状态：
               </div>
-              <div class="status">
-                {{jobData.status}}
+              <div class="state">
+                {{jobData.state}}
               </div>
               <div class="salaryTitle">
                 薪资待遇：
               </div>
               <div class="salary">
-                {{jobData.salary}}/月
+                {{(jobData.salary == null)?"面议":jobData.salary+"/月"}}
               </div>
             </div>
         </div>
@@ -55,12 +55,7 @@ export default {
       gotinfored: false, // 默认没有获得数据，相关内容不显示
       jobId: localStorage.getItem('jobId'), // 获取jobid
       chooseType: 0, // 选项初始化 0 1收藏 2删除 3投递
-      jobData: {
-        name: 'IT开发工程师',
-        location: '广州佛山',
-        salary: '3000',
-        status: '投递中'
-      } // 表格初始化数据
+      jobData: {} // 表格初始化数据
     }
   },
   mounted: function () {
@@ -77,7 +72,6 @@ export default {
     // 向后台请求岗位信息
     if (_self.jobId !== '' && _self.jobId !== null) { // 如果选中的jobId不为空，则向后台请求简历数据
       if (_self.gitinfor()) { // 尝试请求岗位信息
-        _self.gotinfored = true
         Message({
           type: 'success',
           message: '数据获取成功！'
@@ -99,13 +93,11 @@ export default {
   methods: {
     gitinfor () { // 用于向后台请求简历数据
       let _self = this
-      _self.chooseType = 0 // 代号置零，请求岗位数据
       axios(
         {
           method: 'post',
-          url: 'ccs/', // 请求简历的地址
+          url: '/employee/detail/getInfor', // 请求岗位具体信息的地址
           data: {
-            chooseType: _self.chooseType, // 选项的代号，
             jobId: _self.jobId // 此时的应聘者的代号
           },
           transformRequest: [function (data) {
@@ -119,6 +111,11 @@ export default {
         function (res) { // 如果返回数据，则放到表格中
           if (res.data) {
             _self.jobData = res.data.jobData // 获取工作数据地址
+            if (_self.jobData === null) {
+              _self.gotinfored = false
+            } else {
+              _self.gotinfored = true
+            }
             return true
           }
         }, function (response) { // 如果返回错误，则报错
@@ -217,7 +214,7 @@ export default {
   margin-top: 15px;
   font-size: 28px
 }
-.status{
+.state{
   color: cornflowerblue;
   margin-left: 50%;
   margin-top: 10px;
