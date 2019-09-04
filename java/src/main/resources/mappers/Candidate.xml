@@ -36,6 +36,7 @@
                     ${item} like "${params[item]}%"
                 </if>
             </foreach>
+            and c_state != "Q1RBZcLv0qSeIhFf"
         </where>
     </select>
     <select id="getJobIdsByEmail" resultType="String">
@@ -51,37 +52,37 @@
         select * from t_candidate_infor where c_id = #{id}
     </select>
     <select id="getStates" resultType="String">
-        select distinct c_state  from t_candidate_infor
+        select distinct c_state  from t_candidate_infor where c_time != ""
     </select>
     <select id="getAges" resultType="Integer">
-        select distinct c_age from t_candidate_infor
+        select distinct c_age from t_candidate_infor where c_time != ""
     </select>
     <select id="getRegions" resultType="String">
-        select distinct c_native from t_candidate_infor
+        select distinct c_native from t_candidate_infor where c_time != ""
     </select>
     <select id="getMails" resultType="String">
-        select c_mail from t_candidate_infor
+        select c_mail from t_candidate_infor where c_time != ""
     </select>
     <select id="getNames" resultType="String">
         select distinct c_name from t_candidate_infor
     </select>
     <select id="getEduBackGrounds" resultType="String">
-        select distinct c_eduBackGround from t_candidate_infor
+        select distinct c_eduBackGround from t_candidate_infor where c_time != ""
     </select>
     <select id="getGraduates" resultType="String">
-        select distinct c_graduate from t_candidate_infor
+        select distinct c_graduate from t_candidate_infor where c_time != ""
     </select>
     <select id="getTimes" resultType="String">
-        select distinct c_time from t_candidate_infor
+        select distinct c_time from t_candidate_infor where c_time != ""
     </select>
     <select id="getJobs" resultType="String">
-        select distinct c_job from t_candidate_infor
+        select distinct c_job from t_candidate_infor where c_time != ""
     </select>
     <select id="getJobRegions" resultType="String">
-        select distinct c_job_region from t_candidate_infor
+        select distinct c_job_region from t_candidate_infor where c_time != ""
     </select>
     <select id="getJobIds" resultType="String">
-        select distinct c_jobId from t_candidate_infor
+        select distinct c_jobId from t_candidate_infor where c_time != ""
     </select>
 
 

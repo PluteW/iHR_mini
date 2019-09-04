@@ -70,9 +70,9 @@ export default {
         if (res.data) {
           _self.informationData = res.data.informationData
           if (_self.informationData.length === 0) {
-            noData = false
-          }else{
-            noData = true
+            _self.noData = true
+          } else {
+            _self.noData = false
           }
           Message({
             type: 'success',

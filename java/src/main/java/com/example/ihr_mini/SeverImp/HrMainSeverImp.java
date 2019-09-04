@@ -95,6 +95,8 @@ public class HrMainSeverImp{
 
         List<String> region = candidateMapper.getRegions(); // 地区
         List<String> timeDB = candidateMapper.getTimes(); // 投递时间 yyyyMMdd格式
+        System.out.println(timeDB);
+        System.out.println(region);
         Collections.sort(timeDB);
         ArrayList<String> time = new ArrayList<>();
         List<String> jobs = candidateMapper.getJobs(); // 已投岗位列表
