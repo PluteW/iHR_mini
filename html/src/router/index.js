@@ -5,6 +5,7 @@ import login from '@/components/login'
 import Elogin from '@/components/Elogin'
 import Emain from '@/components/Employee_main/Emain'
 import Hmain from '@/components/Hr_main/Hmain'
+import Hrown from '@/components/HrOwn/HrOwn'
 
 Vue.use(Router)
 
@@ -14,6 +15,11 @@ export default new Router({
       path: '/hello',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/own',
+      name: 'own',
+      component: Hrown
     },
     {
       path: '/Emain',

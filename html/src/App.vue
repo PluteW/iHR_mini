@@ -55,7 +55,7 @@ export default {
           type: 'error'
         })
       } else if (that.user.state === 0) { // 状态码为0，账号正常，可转到我的页面
-        window.location.href = '/hown'
+        window.location.href = '/own'
       }
     }
   }
