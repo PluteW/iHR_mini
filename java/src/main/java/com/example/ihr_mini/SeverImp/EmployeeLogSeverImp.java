@@ -43,9 +43,11 @@ public class EmployeeLogSeverImp {
                 String stateId = employeeUser.getState();
                 String stateStatement = codeStateMapper.getStatementById(stateId);
                 int state = -1;
+//                更新账号状态
                 if (stateStatement.equals("正常")){
                     state = 0;
                 }
+//                将登陆用户的信息返回给前端
                 Map<String,Object> userdata = new HashMap<>();
                 userdata.put("id",id);
                 userdata.put("picId",picId);
@@ -72,11 +74,13 @@ public class EmployeeLogSeverImp {
         String mail = (String)data.get("username");
         String pass = (String)data.get("password");
         Candidate candidate = candidateMapper.getOneByMail(mail);
+//        如果账号已经被人注册了
         if(candidate != null){
             result = -1;
             res.put("result",result);
             return res;
         }else {
+//            账号没有被人注册，则进行正常的注册程序
             candidateMapper.addCandidate(mail,pass);
             candidate = candidateMapper.getOneByMail(mail);
 
@@ -98,7 +102,6 @@ public class EmployeeLogSeverImp {
             userdata.put("state",state);
 
             res.put("userdata",userdata);
-
         }
         return res;
     }

@@ -224,5 +224,4 @@ public class Candidate {
         return job_region;
     }
 
-
 }

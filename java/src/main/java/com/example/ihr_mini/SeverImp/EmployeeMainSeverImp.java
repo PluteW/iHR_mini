@@ -29,6 +29,7 @@ public class EmployeeMainSeverImp {
         List<Job> jobs = jobMapper.getJobs();
         Job job = null;
         String tem = "";
+//        将状态码转换为文本描述
         for (int i = 0;i<jobs.size();i++){
             job = jobs.get(i);
             tem = job.getLocation();
@@ -38,6 +39,7 @@ public class EmployeeMainSeverImp {
             tem = job.getState();
             job.setState(codeStateMapper.getStatementById(tem));
         }
+//        放入到保存结果的 map 中
         res.put("informationData",jobs);
 
         //可选项列表更新
@@ -50,7 +52,7 @@ public class EmployeeMainSeverImp {
         //获得可供选择的状态码
         List<String> states= jobMapper.getstates();
 
-        //以下将id转为文本描述
+        //以下将工作id转为文本描述
         String statement = "";
         for(int i = 0;i<JobCategorys.size();i++){
             tem = JobCategorys.get(i); // 获得一个id
@@ -60,6 +62,7 @@ public class EmployeeMainSeverImp {
             }
             JobCategorys.set(i,statement);
         }
+//        将工作地点的代号转换为文本表述
         for(int i = 0;i<Loctions.size();i++){
             tem = Loctions.get(i); // 获得一个id
             statement = codeStateMapper.getStatementById(tem);
@@ -68,6 +71,7 @@ public class EmployeeMainSeverImp {
             }
             Loctions.set(i,statement);
         }
+//        将工作的学历要求代号转换为文本描述
         for(int i = 0;i<eduBackGrounds.size();i++){
             tem = eduBackGrounds.get(i); // 获得一个id
             statement = codeStateMapper.getStatementById(tem);
@@ -76,13 +80,15 @@ public class EmployeeMainSeverImp {
             }
             eduBackGrounds.set(i,statement);
         }
+//        将状态码转换为文本描述
         for(int i = 0;i<states.size();i++){
             tem = states.get(i); // 获得一个id
             statement = codeStateMapper.getStatementById(tem);
             states.set(i,statement);
         }
 
-        System.out.println(JobCategorys+"    "+Loctions+"    "+eduBackGrounds+"    "+states);
+//        将文本信息压入结果中
+//        System.out.println(JobCategorys+"    "+Loctions+"    "+eduBackGrounds+"    "+states);
         res.put("region",Loctions);
         res.put("eduBackGround",eduBackGrounds);
         res.put("state",states);
@@ -113,7 +119,6 @@ public class EmployeeMainSeverImp {
         String jobReginID = (codeStateMapper.getIdByStatement(jobRegin) == null)?"-1":codeStateMapper.getIdByStatement(jobRegin);
         String stateID = (codeStateMapper.getIdByStatement(state) == null)?"-1":codeStateMapper.getIdByStatement(state);
         String eduBackGroundID = (codeStateMapper.getIdByStatement(eduBackGround) == null)?"-1":codeStateMapper.getIdByStatement(eduBackGround);
-
 
         Date date = null;
         String d = "";
